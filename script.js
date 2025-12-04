@@ -1,16 +1,17 @@
 // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
             });
+        }
     });
+});
+
 // Navbar background change on scroll
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
@@ -87,6 +88,26 @@ const statsObserver = new IntersectionObserver((entries) => {
 const missionStats = document.querySelector('.mission-stats');
 if (missionStats) {
     statsObserver.observe(missionStats);
+}
+
+// Form submission (del segundo código)
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+        
+        // Aquí puedes agregar la lógica para enviar el formulario
+        // Por ahora mostramos un mensaje de confirmación
+        alert('¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.');
+        this.reset();
+    });
 }
 
 // Three.js Scene for Hero Section
