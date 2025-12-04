@@ -22,33 +22,44 @@
     </nav>
 
     <section id="inicio" class="hero">
-        <div class="hero-overlay"></div>
+        <div id="hero-canvas-container"></div>
+        <div id="hero-loading">
+            <div class="hero-loader"></div>
+            <div class="hero-loading-text">Cargando Rover...</div>
+        </div>
         <div class="container hero-content">
-            <h1 class="hero-title">UMNG ROVER</h1>
-            <p class="hero-subtitle">Universidad Militar Nueva Granada</p>
-            <p class="hero-description">Estudiantes de décimo semestre compitiendo en el University Rover Challenge</p>
-            <a href="#proyecto" class="cta-button">Conoce Nuestro Proyecto</a>
+            <h1 class="hero-title">MILIMARS ROVER</h1>
+            <div class="hero-bottom-content">
+                <p class="hero-subtitle">Universidad Militar Nueva Granada</p>
+                <p class="hero-description">Estudiantes de decimo semestre compitiendo en el University Rover Challenge</p>
+                <a href="#proyecto" class="cta-button">Conoce Nuestro Proyecto</a>
+            </div>
         </div>
     </section>
+
+    <!-- Three.js Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
 
     <section id="proyecto" class="section project-section">
         <div class="container">
             <h2 class="section-title">Nuestro Proyecto</h2>
             <div class="project-grid">
                 <div class="project-card">
-                    <div class="card-icon">=€</div>
+                    <div class="card-icon">ğŸš€</div>
                     <h3>University Rover Challenge</h3>
-                    <p>Competimos en uno de los desafíos de robótica más prestigiosos del mundo, diseñado para simular misiones de exploración marciana.</p>
+                    <p>Competimos en uno de los desafÃ­os de robÃ³tica mÃ¡s prestigiosos del mundo, diseÃ±ado para simular misiones de exploraciÃ³n marciana.</p>
                 </div>
                 <div class="project-card">
-                    <div class="card-icon">></div>
-                    <h3>Tecnología de Punta</h3>
-                    <p>Desarrollamos un rover autónomo con capacidades avanzadas de navegación, manipulación y análisis científico.</p>
+                    <div class="card-icon">ğŸ¤–</div>
+                    <h3>TecnologÃ­a de Punta</h3>
+                    <p>Desarrollamos un rover autÃ³nomo con capacidades avanzadas de navegaciÃ³n, manipulaciÃ³n y anÃ¡lisis cientÃ­fico.</p>
                 </div>
                 <div class="project-card">
-                    <div class="card-icon"><“</div>
-                    <h3>Formación Académica</h3>
-                    <p>Estudiantes de décimo semestre aplicando conocimientos en ingeniería, programación y diseño mecánico.</p>
+                    <div class="card-icon">ğŸ“</div>
+                    <h3>FormaciÃ³n AcadÃ©mica</h3>
+                    <p>Estudiantes de dÃ©cimo semestre aplicando conocimientos en ingenierÃ­a, programaciÃ³n y diseÃ±o mecÃ¡nico.</p>
                 </div>
             </div>
         </div>
@@ -58,8 +69,8 @@
         <div class="container">
             <div class="mission-content">
                 <div class="mission-text">
-                    <h2 class="section-title">Nuestra Misión</h2>
-                    <p>Diseñar, construir y operar un rover que pueda completar las tareas del University Rover Challenge, demostrando excelencia técnica y capacidad de innovación. Representamos a la Universidad Militar Nueva Granada en esta competencia internacional, buscando posicionar a Colombia en el ámbito de la robótica espacial.</p>
+                    <h2 class="section-title">Nuestra MisiÃ³n</h2>
+                    <p>DiseÃ±ar, construir y operar un rover que pueda completar las tareas del University Rover Challenge, demostrando excelencia tÃ©cnica y capacidad de innovaciÃ³n. Representamos a la Universidad Militar Nueva Granada en esta competencia internacional, buscando posicionar a Colombia en el Ã¡mbito de la robÃ³tica espacial.</p>
                     <div class="mission-stats">
                         <div class="stat">
                             <div class="stat-number">10</div>
@@ -67,13 +78,13 @@
                         </div>
                         <div class="stat">
                             <div class="stat-number">2025</div>
-                            <div class="stat-label">Año de Competencia</div>
+                            <div class="stat-label">AÃ±o de Competencia</div>
                         </div>
                     </div>
                 </div>
                 <div class="mission-image">
                     <div class="rover-placeholder">
-                        <span class="rover-icon">=ø</span>
+                        <span class="rover-icon">ğŸš€</span>
                     </div>
                 </div>
             </div>
@@ -82,27 +93,83 @@
 
     <section id="equipo" class="section team-section">
         <div class="container">
-            <h2 class="section-title">Áreas de Trabajo</h2>
-            <div class="team-grid">
-                <div class="team-card">
-                    <div class="team-icon">™</div>
-                    <h3>Diseño Mecánico</h3>
-                    <p>Estructura, suspensión y sistemas de movilidad del rover.</p>
+            <h2 class="section-title">Nuestro Equipo</h2>
+
+            <!-- Misiones Principales -->
+            <div class="missions-container">
+                <h3 class="subsection-title">Misiones Principales</h3>
+                <div class="missions-grid">
+                    <div class="mission-card">
+                        <div class="mission-icon">ğŸ”¬</div>
+                        <h4>MisiÃ³n CientÃ­fica</h4>
+                        <p>AnÃ¡lisis de muestras y recolecciÃ³n de datos cientÃ­ficos en terreno marciano simulado.</p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">âš™ï¸</div>
+                        <h4>MisiÃ³n de Servicio y Equipos</h4>
+                        <p>Mantenimiento y operaciÃ³n de sistemas crÃ­ticos del rover en condiciones extremas.</p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">ğŸ—ºï¸</div>
+                        <h4>MisiÃ³n de NavegaciÃ³n AutÃ³noma</h4>
+                        <p>NavegaciÃ³n inteligente y autÃ³noma en terrenos complejos sin intervenciÃ³n humana.</p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">ğŸ“¦</div>
+                        <h4>MisiÃ³n de Entrega</h4>
+                        <p>Transporte y entrega precisa de equipos y suministros en ubicaciones especÃ­ficas.</p>
+                    </div>
                 </div>
-                <div class="team-card">
-                    <div class="team-icon">=»</div>
-                    <h3>Software y Control</h3>
-                    <p>Sistemas de navegación autónoma y control remoto.</p>
-                </div>
-                <div class="team-card">
-                    <div class="team-icon">=</div>
-                    <h3>Electrónica</h3>
-                    <p>Circuitos, sensores y sistemas de comunicación.</p>
-                </div>
-                <div class="team-card">
-                    <div class="team-icon">=,</div>
-                    <h3>Instrumentación</h3>
-                    <p>Equipos científicos y sistemas de análisis.</p>
+            </div>
+
+            <!-- LÃ­deres de Ãrea -->
+            <div class="leaders-container">
+                <h3 class="subsection-title">LÃ­deres de Ãrea</h3>
+                <div class="leaders-grid">
+                    <div class="leader-card">
+                        <div class="leader-avatar">
+                            <span class="avatar-icon">ğŸ’»</span>
+                        </div>
+                        <h4 class="leader-name">Jackson Devia Gomes</h4>
+                        <p class="leader-role">LÃ­der IT</p>
+                        <p class="leader-description">Responsable de la infraestructura tecnolÃ³gica y sistemas de informaciÃ³n del proyecto.</p>
+                    </div>
+
+                    <div class="leader-card">
+                        <div class="leader-avatar">
+                            <span class="avatar-icon">âš¡</span>
+                        </div>
+                        <h4 class="leader-name">SebastiÃ¡n CastaÃ±eda</h4>
+                        <p class="leader-role">LÃ­der ElectrÃ³nica</p>
+                        <p class="leader-description">Encargado del diseÃ±o y gestiÃ³n de circuitos, sensores y sistemas electrÃ³nicos.</p>
+                    </div>
+
+                    <div class="leader-card">
+                        <div class="leader-avatar">
+                            <span class="avatar-icon">ğŸ¦¾</span>
+                        </div>
+                        <h4 class="leader-name">Santiago Herrera Guevara</h4>
+                        <p class="leader-role">LÃ­der Brazo RobÃ³tico</p>
+                        <p class="leader-description">Lidera el desarrollo y control del brazo mecÃ¡nico para manipulaciÃ³n de objetos.</p>
+                    </div>
+
+                    <div class="leader-card">
+                        <div class="leader-avatar">
+                            <span class="avatar-icon">ğŸ </span>
+                        </div>
+                        <h4 class="leader-name">Jairo Esteban Moreno</h4>
+                        <p class="leader-role">LÃ­der MÃ³dulo de Vida & PM</p>
+                        <p class="leader-description">Gestiona el mÃ³dulo de soporte vital y coordina la direcciÃ³n del proyecto.</p>
+                    </div>
+
+                    <div class="leader-card ceo-card">
+                        <div class="leader-avatar">
+                            <span class="avatar-icon">ğŸ‘¨â€ğŸ’¼</span>
+                        </div>
+                        <h4 class="leader-name">Juan Camilo HernÃ¡ndez</h4>
+                        <p class="leader-role">CEO</p>
+                        <p class="leader-description">Director ejecutivo y lÃ­der general del proyecto MILIMARS Rover.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -112,14 +179,14 @@
         <div class="container">
             <h2 class="section-title">Contacto</h2>
             <div class="contact-content">
-                <p class="contact-text">¿Interesado en apoyar nuestro proyecto o conocer más detalles?</p>
+                <p class="contact-text">Â¿Interesado en apoyar nuestro proyecto o conocer mÃ¡s detalles?</p>
                 <div class="contact-info">
                     <div class="contact-item">
-                        <span class="contact-icon"><Û</span>
+                        <span class="contact-icon">ğŸ“</span>
                         <span>Universidad Militar Nueva Granada</span>
                     </div>
                     <div class="contact-item">
-                        <span class="contact-icon">=ç</span>
+                        <span class="contact-icon">ğŸ“§</span>
                         <span>rover@unimilitar.edu.co</span>
                     </div>
                 </div>
