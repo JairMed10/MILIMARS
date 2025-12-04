@@ -10,10 +10,7 @@
                     });
                 }
             });
-        }
     });
-});
-
 // Navbar background change on scroll
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
