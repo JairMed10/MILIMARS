@@ -1,23 +1,160 @@
-// Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
+// ===== CAROUSEL =====
+let currentSlide = 0;
+const slides = document.querySelectorAll('.carousel-slide');
+const indicators = document.querySelectorAll('.indicator');
+const totalSlides = slides.length;
+
+// Función para cambiar slide
+function goToSlide(slideIndex) {
+    currentSlide = slideIndex;
+    const track = document.querySelector('.carousel-track');
+    const offset = -slideIndex * (100 / totalSlides);
+    track.style.transform = `translateX(${offset}%)`;
+
+    // Actualizar indicadores
+    indicators.forEach((indicator, index) => {
+        indicator.classList.toggle('active', index === slideIndex);
     });
+}
+
+// Auto-play del carrusel
+function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides;
+    goToSlide(currentSlide);
+}
+
+// Iniciar auto-play (cada 4 segundos)
+let autoplayInterval = setInterval(nextSlide, 4000);
+
+// Click en indicadores
+indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+        goToSlide(index);
+        // Reiniciar el autoplay
+        clearInterval(autoplayInterval);
+        autoplayInterval = setInterval(nextSlide, 4000);
+    });
+});
+
+// Pausar autoplay cuando el mouse está sobre el carrusel
+const carousel = document.querySelector('.carousel');
+if (carousel) {
+    carousel.addEventListener('mouseenter', () => {
+        clearInterval(autoplayInterval);
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+        autoplayInterval = setInterval(nextSlide, 4000);
+    });
+}
+
+// ===== ANIMACIONES DE SCROLL =====
+// Intersection Observer para animaciones on scroll
+const scrollObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            // Agregar delay escalonado para múltiples elementos
+            setTimeout(() => {
+                entry.target.classList.add('animated');
+            }, index * 100);
+            scrollObserver.unobserve(entry.target);
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+});
+
+// Observar todos los elementos con la clase animate-on-scroll
+document.addEventListener('DOMContentLoaded', () => {
+    const animatedElements = document.querySelectorAll('.animate-on-scroll');
+    animatedElements.forEach(element => {
+        scrollObserver.observe(element);
+    });
+});
+
+// Smooth scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// ===== CARRUSEL DE LÍDERES =====
+let currentLeader = 0;
+const leaderSlides = document.querySelectorAll('.leader-slide');
+const leaderIndicators = document.querySelectorAll('.leader-indicator');
+const totalLeaders = leaderSlides.length;
+
+// Función para cambiar al líder
+function goToLeader(leaderIndex) {
+    currentLeader = leaderIndex;
+    const track = document.querySelector('.leaders-track');
+    if (track) {
+        const offset = -leaderIndex * 20; // 20% porque tenemos 5 líderes (100% / 5 = 20%)
+        track.style.transform = `translateX(${offset}%)`;
+
+        // Actualizar indicadores
+        leaderIndicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === leaderIndex);
+        });
+    }
+}
+
+// Auto-play del carrusel de líderes
+function nextLeader() {
+    currentLeader = (currentLeader + 1) % totalLeaders;
+    goToLeader(currentLeader);
+}
+
+// Iniciar auto-play del carrusel de líderes (cada 5 segundos)
+let leadersAutoplayInterval;
+if (leaderSlides.length > 0) {
+    leadersAutoplayInterval = setInterval(nextLeader, 5000);
+}
+
+// Click en indicadores de líderes
+leaderIndicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => {
+        goToLeader(index);
+        // Reiniciar el autoplay
+        if (leadersAutoplayInterval) {
+            clearInterval(leadersAutoplayInterval);
+            leadersAutoplayInterval = setInterval(nextLeader, 5000);
+        }
+    });
+});
+
+// Pausar autoplay cuando el mouse está sobre el carrusel de líderes
+const leadersCarousel = document.querySelector('.Quin_Cards');
+if (leadersCarousel) {
+    leadersCarousel.addEventListener('mouseenter', () => {
+        if (leadersAutoplayInterval) {
+            clearInterval(leadersAutoplayInterval);
+        }
+    });
+
+    leadersCarousel.addEventListener('mouseleave', () => {
+        leadersAutoplayInterval = setInterval(nextLeader, 5000);
+    });
+}
+
 // Navbar background change on scroll
 window.addEventListener('scroll', () => {
-    const navbar = document.querySelector('.navbar');
+    const header = document.querySelector('.header');
     if (window.scrollY > 100) {
-        navbar.style.background = 'rgba(26, 71, 42, 0.98)';
+        header.style.background = 'rgba(255, 255, 255, 0.98)';
+        header.style.boxShadow = '0 4px 15px rgba(58, 63, 114, 0.15)';
     } else {
-        navbar.style.background = 'rgba(26, 71, 42, 0.95)';
+        header.style.background = 'rgba(255, 255, 255, 0.95)';
+        header.style.boxShadow = '0 2px 10px rgba(58, 63, 114, 0.1)';
     }
 });
 
@@ -87,6 +224,26 @@ const statsObserver = new IntersectionObserver((entries) => {
 const missionStats = document.querySelector('.mission-stats');
 if (missionStats) {
     statsObserver.observe(missionStats);
+}
+
+// Form submission (del segundo código)
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+        
+        // Aquí puedes agregar la lógica para enviar el formulario
+        // Por ahora mostramos un mensaje de confirmación
+        alert('¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.');
+        this.reset();
+    });
 }
 
 // Three.js Scene for Hero Section
