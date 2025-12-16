@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMNG Rover - University Rover Challenge</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <img src="logo.png" alt="UMNG Logo" class="logo">
+                <ul class="nav-links">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#proyecto">Proyecto</a></li>
+                    <li><a href="#equipo">Equipo</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="inicio" class="hero">
+        <div id="hero-canvas-container"></div>
+        <div id="hero-loading">
+            <div class="hero-loader"></div>
+            <div class="hero-loading-text">Cargando Rover...</div>
+        </div>
+        <div class="container hero-content">
+            <h1 class="hero-title">MILIMARS ROVER</h1>
+            <div class="hero-bottom-content">
+                <p class="hero-subtitle">Universidad Militar Nueva Granada</p>
+                <p class="hero-description">Estudiantes de decimo semestre compitiendo en el University Rover Challenge</p>
+                <a href="#proyecto" class="cta-button">Conoce Nuestro Proyecto</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three.js Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+
+    <section id="proyecto" class="section project-section">
+        <div class="container">
+            <h2 class="section-title">Nuestro Proyecto</h2>
+
+            <!-- Contenido adicional del segundo HTML -->
+            <div class="project-intro">
+                <p>Nuestro proyecto nace con la misión de diseñar, construir y operar un rover exploratorio de alto rendimiento, capaz de superar las exigentes pruebas del University Rover Challenge (URC), la competencia internacional más prestigiosa en robótica planetaria a nivel universitario. Impulsados por la pasión por la ingeniería, la exploración espacial y el trabajo multidisciplinario, buscamos crear una plataforma robótica innovadora, robusta y preparada para enfrentar escenarios similares a los de futuras misiones humanas a Marte.</p>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Visión y Misión</h3>
+                <div class="vision-mission-grid">
+                    <div class="vm-card">
+                        <h3>Nuestra Visión</h3>
+                        <p>Convertirnos en un equipo de referencia en robótica espacial universitaria a nivel latinoamericano, desarrollando tecnología que inspire a nuevas generaciones de ingenieros y contribuya al avance de la exploración planetaria.</p>
+                    </div>
+                    <div class="vm-card">
+                        <h3>Nuestra Misión</h3>
+                        <p>Construir un rover capaz de realizar tareas científicas, de navegación autónoma, manipulación avanzada y soporte a operaciones análogas a misiones marcianas, cumpliendo con los estándares técnicos y operativos establecidos por el URC, mientras fomentamos el aprendizaje práctico y el trabajo en equipo interdisciplinario.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">¿Qué es el University Rover Challenge (URC)?</h3>
+                <div class="urc-content">
+                    <div class="urc-description">
+                        <p>El <strong>University Rover Challenge</strong>, organizado por la Mars Society, es la competencia anual de robótica espacial más prestigiosa del mundo para estudiantes universitarios. Reúne a más de 100 equipos de todo el mundo con el objetivo de diseñar un rover marciano totalmente funcional. Cada prototipo debe superar misiones que simulan escenarios reales en Marte, evaluando capacidades críticas en:</p>
+                        <ul style="margin-top: 1rem; margin-left: 2rem; color: #555;">
+                            <li><strong>Búsqueda de vida microbiana:</strong> Recolección y análisis de muestras subsuperficiales</li>
+                            <li><strong>Manipulación de equipos:</strong> Operaciones dextras en estaciones análogas</li>
+                            <li><strong>Entrega de objetos:</strong> Navegación en terreno extremo y manejo de cargas</li>
+                            <li><strong>Navegación autónoma:</strong> Reconocimiento de objetivos y desplazamiento sin intervención humana</li>
+                        </ul>
+                    </div>
+
+                    <h4 style="color: var(--primary-color); margin-bottom: 1rem; font-size: 1.3rem;">Objetivos del URC</h4>
+                    <div class="urc-objectives">
+                        <div class="objective-card">
+                            <h4>Innovación Tecnológica</h4>
+                            <p>Impulsar el desarrollo de soluciones robóticas avanzadas aplicables a la exploración espacial</p>
+                        </div>
+                        <div class="objective-card">
+                            <h4>Formación Práctica</h4>
+                            <p>Proporcionar experiencia real en diseño, construcción y operación de sistemas complejos</p>
+                        </div>
+                        <div class="objective-card">
+                            <h4>Competencia Internacional</h4>
+                            <p>Evaluar el desempeño de los mejores equipos universitarios en condiciones extremadamente desafiantes</p>
+                        </div>
+                        <div class="objective-card">
+                            <h4>Simulación Realista</h4>
+                            <p>Replicar misiones marcianas en un entorno análogo utilizado por investigadores y astronautas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Cronología del Proyecto</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Fase de Concepto (Septiembre - Octubre)</h4>
+                        <p>Definición de requisitos, estudio de misiones, análisis del reglamento URC y formación del equipo.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Diseño y Modelado (Noviembre - Diciembre)</h4>
+                        <p>Desarrollo mecánico, electrónico y de software; simulaciones, prototipos iniciales y entrega del Preliminary Design Review (PDR).</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Integración (Enero - Marzo)</h4>
+                        <p>Fabricación, ensamblaje del rover, validación de subsistemas y pruebas funcionales.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Pruebas de Campo (Abril - Mayo)</h4>
+                        <p>Evaluación del rendimiento en terrenos reales, optimización de algoritmos, procedimientos operativos y entrega del System Acceptance Review (SAR).</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Preparación para Competencia (Mayo)</h4>
+                        <p>Ensayos finales, documentación oficial y ajustes de último momento.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Competencia URC (Finales de Mayo - Inicios de Junio)</h4>
+                        <p>Participación en el University Rover Challenge en Utah, Estados Unidos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Ubicación de la Competencia</h3>
+                <div class="location-section">
+                    <p>La competencia se lleva a cabo en el <strong>Mars Desert Research Station (MDRS)</strong>, ubicado cerca de Hanksville, en el desierto de Utah, Estados Unidos. Este sitio es uno de los mejores análogos terrestres de la superficie marciana, ofreciendo:</p>
+                    <div class="location-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">🏔️</span>
+                            <span>Terreno rocoso y accidentado con pendientes desafiantes</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🌡️</span>
+                            <span>Clima árido con temperaturas extremas</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🪐</span>
+                            <span>Paisajes similares a los captados por rovers marcianos</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📡</span>
+                            <span>Aislamiento que simula condiciones de operación remota</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3 class="subsection-title">Fechas Clave</h3>
+                <div class="dates-grid">
+                    <div class="date-card">
+                        <div class="date-month">Septiembre</div>
+                        <div class="date-event">Publicación del reglamento oficial</div>
+                    </div>
+                    <div class="date-card">
+                        <div class="date-month">Finales de Otoño</div>
+                        <div class="date-event">Entrega del Preliminary Design Review (PDR)</div>
+                    </div>
+                    <div class="date-card">
+                        <div class="date-month">Primer Trimestre del Año</div>
+                        <div class="date-event">Entrega del System Acceptance Review (SAR)</div>
+                    </div>
+                    <div class="date-card">
+                        <div class="date-month">Mayo</div>
+                        <div class="date-event">Confirmación de aceptación al URC</div>
+                    </div>
+                    <div class="date-card">
+                        <div class="date-month">Finales de Mayo - Inicios de Junio</div>
+                        <div class="date-event">Competencia University Rover Challenge en Utah</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section mission-section">
+        <div class="closing-text">
+            <p>Estamos comprometidos con la excelencia técnica y la representación de nuestra universidad en uno de los retos de ingeniería más demandantes del mundo. Cada componente, cada línea de código y cada prueba nos acerca más a nuestro objetivo: competir exitosamente en el desierto marciano de Utah y demostrar que la innovación latinoamericana puede destacar en el escenario internacional de la robótica espacial.</p>
+        </div>
+    </section>
+
+    <section id="equipo" class="section team-section">
+        <div class="container">
+            <h2 class="section-title">Nuestro Equipo</h2>
+
+            <!-- Misiones Principales -->
+            <div class="missions-container">
+                <h3 class="subsection-title">Misiones Principales</h3>
+                <div class="missions-grid">
+                    <div class="mission-card">
+                        <div class="mission-icon">🔬</div>
+                        <h4>Misión Científica</h4>
+                        <p>Análisis de muestras y recolección de datos científicos en terreno marciano simulado.</p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">⚙️</div>
+                        <h4>Misión de Servicio y Equipos</h4>
+                        <p>Mantenimiento y operación de sistemas críticos del rover en condiciones extremas.</p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">🗺️</div>
+                        <h4>Misión de Navegación Autónoma</h4>
+                        <p>Navegación inteligente y autónoma en terrenos complejos sin intervención humana.</p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="mission-icon">📦</div>
+                        <h4>Misión de Entrega</h4>
+                        <p>Transporte y entrega precisa de equipos y suministros en ubicaciones específicas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Líderes de Área -->
+            <div class="leaders-container">
+                <h3 class="subsection-title">Líderes de Área</h3>
+                <div class="leaders-grid">
+                    <div class="leader-card">
+                        <div class="leader-avatar">
+                            <span class="avatar-icon">💻</span>
+                        </div>
+                        <h4 class="leader-name">Jackson Devia Gomes</h4>
+                        <p class="leader-role">Líder IT</p>
+                        <p class="leader-description">Responsable de la infraestructura tecnológica y sistemas de información del proyecto.</p>
+                    </div>
+
+                    <div class="leader-card">
+                        <div class="leader-avatar">
+                            <span class="avatar-icon">⚡</span>
+                        </div>
+                        <h4 class="leader-name">Sebastián Castañeda</h4>
+                        <p class="leader-role">Líder Electrónica</p>
+                        <p class="leader-description">Encargado del diseño y gestión de circuitos, sensores y sistemas electrónicos.</p>
+                    </div>
+
+                    <div class="leader-card">
+                        <div class="leader-avatar">
+                            <span class="avatar-icon">🦾</span>
+                        </div>
+                        <h4 class="leader-name">Santiago Herrera Guevara</h4>
+                        <p class="leader-role">Líder Brazo Robótico</p>
+                        <p class="leader-description">Lidera el desarrollo y control del brazo mecánico para manipulación de objetos.</p>
+                    </div>
+
+                    <div class="leader-card">
+                        <div class="leader-avatar">
+                            <span class="avatar-icon">🏠</span>
+                        </div>
+                        <h4 class="leader-name">Jairo Esteban Moreno</h4>
+                        <p class="leader-role">Líder Módulo de Vida & PM</p>
+                        <p class="leader-description">Gestiona el módulo de soporte vital y coordina la dirección del proyecto.</p>
+                    </div>
+
+                    <div class="leader-card ceo-card">
+                        <div class="leader-avatar">
+                            <span class="avatar-icon">👨‍💼</span>
+                        </div>
+                        <h4 class="leader-name">Juan Camilo Hernández</h4>
+                        <p class="leader-role">CEO</p>
+                        <p class="leader-description">Director ejecutivo y líder general del proyecto MILIMARS Rover.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Áreas de Trabajo adicionales del segundo HTML -->
+            <h3 class="subsection-title" style="margin-top: 3rem;">Áreas de Trabajo</h3>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-icon">⚙️</div>
+                    <h3>Diseño Mecánico</h3>
+                    <p>Estructura, suspensión y sistemas de movilidad del rover.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon">💻</div>
+                    <h3>Software y Control</h3>
+                    <p>Sistemas de navegación autónoma y control remoto.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon">⚡</div>
+                    <h3>Electrónica</h3>
+                    <p>Circuitos, sensores y sistemas de comunicación.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-icon">🔬</div>
+                    <h3>Instrumentación</h3>
+                    <p>Equipos científicos y sistemas de análisis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacto" class="section contact-section">
+        <div class="container">
+            <h2 class="section-title">Contacto</h2>
+            <div class="contact-intro">
+                <p>¿Interesado en apoyar nuestro proyecto, unirte al equipo o conocer más detalles? Estamos abiertos a colaboraciones, patrocinios y cobertura mediática.</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-form-section">
+                    <h3>Envíanos un Mensaje</h3>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Nombre Completo</label>
+                            <input type="text" id="name" name="name" required placeholder="Tu nombre">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo Electrónico</label>
+                            <input type="email" id="email" name="email" required placeholder="tu@correo.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Asunto</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Selecciona un asunto</option>
+                                <option value="patrocinio">Patrocinio</option>
+                                <option value="colaboracion">Colaboración</option>
+                                <option value="prensa">Prensa/Medios</option>
+                                <option value="unirse">Unirse al equipo</option>
+                                <option value="general">Consulta general</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Mensaje</label>
+                            <textarea id="message" name="message" rows="5" required placeholder="Escribe tu mensaje aquí..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-button">Enviar Mensaje</button>
+                    </form>
+                </div>
+
+                <div class="contact-info-section">
+                    <div class="info-card">
+                        <div class="info-icon">📧</div>
+                        <h4>Email del Equipo</h4>
+                        <p><a href="mailto:universityroverchallengemil@gmail.com">universityroverchallengemil@gmail.com</a></p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">📍</div>
+                        <h4>Ubicación</h4>
+                        <p><strong>Universidad Militar Nueva Granada</strong></p>
+                        <p>Carrera 11 n.° 101-80</p>
+                        <p>Bogotá, Colombia</p>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">📰</div>
+                        <h4>Kit de Medios</h4>
+                        <p>Material para prensa, logos y recursos multimedia</p>
+                        <a href="#" class="media-kit-button">Descargar Kit de Prensa</a>
+                    </div>
+
+                    <div class="info-card social-card">
+                        <div class="info-icon">🌐</div>
+                        <h4>Síguenos</h4>
+                        <div class="social-links">
+                            <a href="#" class="social-link" title="Facebook">📘</a>
+                            <a href="#" class="social-link" title="Instagram">📷</a>
+                            <a href="#" class="social-link" title="Twitter">🐦</a>
+                            <a href="#" class="social-link" title="LinkedIn">💼</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 UMNG Rover Team - Universidad Militar Nueva Granada</p>
+            <p>University Rover Challenge</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
