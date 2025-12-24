@@ -25,10 +25,63 @@
         </div>
     </header>
 
-    <!-- Contenido del Rover -->
-    <section>
-        <!-- Aquí irá el contenido específico de la página del Rover -->
-    </section>
+    <!-- Contenedor con Scroll Snap para las 3 secciones 3D -->
+    <div class="snap-container">
+        <!-- Sección MILIMARS ROVER -->
+        <section id="rover-section" class="hero-3d">
+            <div id="rover-canvas-container"></div>
+            <div id="rover-loading">
+                <div class="hero-loader"></div>
+                <div class="hero-loading-text">Cargando Rover...</div>
+            </div>
+            <svg class="info-line" id="rover-info-line" width="100%" height="100%">
+                <line x1="0" y1="0" x2="0" y2="0" stroke="#FFC857" stroke-width="2" stroke-dasharray="5,5" opacity="0.8"/>
+            </svg>
+            <div class="info-star" id="rover-info-star">★</div>
+            <div class="info-tooltip" id="rover-tooltip">
+                Peso: <span class="weight-value">55 Kg</span>
+            </div>
+            <div class="container hero-content">
+                <h1 class="hero-title">MILIMARS ROVER</h1>
+                <div class="hero-bottom-content">
+                    <p class="hero-subtitle">Universidad Militar Nueva Granada</p>
+                    <p class="hero-description">Estudiantes de décimo semestre compitiendo en el University Rover Challenge</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección MÓDULO DE VIDA -->
+        <section id="modulo-section" class="hero-3d">
+            <div id="modulo-canvas-container"></div>
+            <div id="modulo-loading">
+                <div class="hero-loader"></div>
+                <div class="hero-loading-text">Cargando Módulo de Vida...</div>
+            </div>
+            <div class="container hero-content">
+                <h1 class="hero-title">MÓDULO DE VIDA</h1>
+                <div class="hero-bottom-content">
+                    <p class="hero-subtitle">Sistema de Soporte Vital</p>
+                    <p class="hero-description">Diseñado para simular condiciones de habitabilidad en misiones marcianas</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección BRAZO ROBÓTICO -->
+        <section id="brazo-section" class="hero-3d">
+            <div id="brazo-canvas-container"></div>
+            <div id="brazo-loading">
+                <div class="hero-loader"></div>
+                <div class="hero-loading-text">Cargando Brazo Robótico...</div>
+            </div>
+            <div class="container hero-content">
+                <h1 class="hero-title">BRAZO ROBÓTICO</h1>
+                <div class="hero-bottom-content">
+                    <p class="hero-subtitle">Manipulación de Precisión</p>
+                    <p class="hero-description">Sistema avanzado para operaciones dextras y manipulación de equipos científicos</p>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -121,7 +174,13 @@
             </div>
         </div>
     </footer>
+
+    <!-- Three.js Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+    
+    <script src="js/principal.js"></script>
+    <script src="js/rover.js"></script>
 </body>
-<script src="js/principal.js"></script>
-<script src="js/rover.js"></script>
 </html>
