@@ -291,13 +291,17 @@ body {
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     border: 2px solid transparent;
     background-color: #a4d65e;
-    transition: all 0.5s ease;
+    transition: transform 0.5s ease;
 }
 
 .project-intro1:hover {
     transform: scale(2);
     border-color: #486f1c;
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
+    .text_proyect{
+    transform: scale(1.1);
+
+    }
 }
 
 .project-intro:hover {
@@ -308,7 +312,12 @@ body {
 
 .text_proyect{
     color: white;
+    transition: transform 0.5s ease;
 }
+
+/* .text_proyect:hover{
+    transform: scale(1.1);
+} */
 
 .intro-icon {
     margin: 0 auto 2rem;
