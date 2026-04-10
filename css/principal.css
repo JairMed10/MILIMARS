@@ -197,15 +197,21 @@ body {
 
 /* Colores temporales para cada slide */
 .slide-1 {
-    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    background-image: url("../images/IMG_9011.jpg");
+    background-size: cover;
+    background-position: center;
 }
 
 .slide-2 {
-    background: linear-gradient(135deg, var(--accent-secondary) 0%, var(--accent-color) 100%);
+    background-image: url("../images/IMG_9067.jpg");
+    background-size: cover;
+    background-position: center;
 }
 
 .slide-3 {
-    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--green-optional) 100%);
+    background-image: url("../images/IMG_9044.jpg");
+    background-size: cover;
+    background-position: center;
 }
 
 /* Indicadores del carrusel */
@@ -246,7 +252,7 @@ body {
     /* background: var(--bg-white); */
     position: relative;
     overflow: hidden;
-    background-color:#d3eea8;
+    background-color: #6C75A3;
     
 }
 
@@ -264,15 +270,18 @@ body {
 
 .project-content {
     /* position: relative; */
-    border: 1px solid black;
     justify-content: center;
+    /* border: 1px solid black; */
+    width: 100%;
+    padding: 0;
 
 }
 
 .project-intro {
-    max-width: 900px;
+    width: 100%;
     margin: 0 auto 4rem;
     text-align: center;
+    border: 1px solid black;
     padding: 3rem;
     border-radius: 20px;
     box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.1);
@@ -283,48 +292,421 @@ body {
 }
 
 .project-intro1 {
-    width: 900px;
+    width: 100%;
     margin: 0 auto 4rem;
     text-align: center;
     padding: 3rem;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     border: 2px solid transparent;
-    background-color: #a4d65e;
+    background-color: #bfcde2;
     transition: transform 0.5s ease;
+
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.project-intro1.animated{
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .project-intro1:hover {
-    transform: scale(2);
-    border-color: #486f1c;
+    transform: scale(1.1);    /* border-color: #486f1c;
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
     .text_proyect{
     transform: scale(1.1);
 
-    }
+    } */
 }
+
+/* .flex_row{
+    display: flex;
+    flex-direction: row;
+}
+
+.Cont_animation{
+    border: 1px solid black;
+    width: 100%;
+    position: relative;
+}
+
+.cont_carretera{
+    position: absolute;
+    width: 100%;
+    justify-content: space-around;
+    border: 1px solid black;
+}
+
+.intro-icon {
+    width: 80px;
+    height: 80px;
+    border: 1px solid black;
+    position: absolute;
+    animation: float 3s ease-in-out infinite;
+} */
+
+.Cont_animation {
+            width: 100%;
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(138, 43, 226, 0.3);
+        }
+
+        /* Estrellas de fondo */
+        .Cont_animation::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, white, transparent),
+                radial-gradient(2px 2px at 60px 70px, white, transparent),
+                radial-gradient(1px 1px at 50px 50px, white, transparent),
+                radial-gradient(1px 1px at 130px 80px, white, transparent),
+                radial-gradient(2px 2px at 90px 10px, white, transparent);
+            background-size: 200px 200px;
+            animation: stars-move 120s linear infinite;
+            opacity: 0.7;
+            z-index: 0;
+        }
+
+        @keyframes stars-move {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-200px);
+            }
+        }
+
+        /* Superficie marciana/lunar */
+        .Cont_animation::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(to bottom, 
+                transparent 0%, 
+                rgba(139, 69, 19, 0.3) 20%,
+                #8B4513 60%,
+                #6B3410 100%
+            );
+            z-index: 1;
+            box-shadow: 0 -5px 20px rgba(139, 69, 19, 0.5);
+        }
+
+        /* Cráteres y rocas en la superficie */
+        .crater {
+            position: absolute;
+            bottom: 10px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #5A3015, #3A2010);
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+            z-index: 2;
+        }
+
+        .crater1 {
+            width: 40px;
+            height: 20px;
+            border-radius: 50%;
+            animation: crater-move1 15s linear infinite;
+        }
+
+        .crater2 {
+            width: 30px;
+            height: 15px;
+            border-radius: 50%;
+            animation: crater-move2 18s linear infinite;
+        }
+
+        .crater3 {
+            width: 25px;
+            height: 12px;
+            border-radius: 50%;
+            animation: crater-move3 20s linear infinite;
+        }
+
+        @keyframes crater-move1 {
+            0% { left: 100%; }
+            100% { left: -50px; }
+        }
+
+        @keyframes crater-move2 {
+            0% { left: 100%; }
+            100% { left: -40px; }
+        }
+
+        @keyframes crater-move3 {
+            0% { left: 100%; }
+            100% { left: -30px; }
+        }
+
+        .cont_carretera {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding-bottom: 85px;
+            animation: scroll-background 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes scroll-background {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .cont_carretera svg {
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 10px rgba(138, 43, 226, 0.3));
+            opacity: 0.6;
+        }
+
+        .intro-icon {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            bottom: 80px;
+            left: -80px;
+            z-index: 3;
+            animation: rover-move 10s ease-in-out infinite, rover-shake 0.3s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(255, 165, 0, 0.5)) drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+        }
+
+        @keyframes rover-move {
+            0% {
+                left: -80px;
+            }
+            50% {
+                left: calc(100% - 40px);
+            }
+            100% {
+                left: -80px;
+            }
+        }
+
+        @keyframes rover-shake {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-2px) rotate(-0.5deg);
+            }
+            50% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            75% {
+                transform: translateY(-2px) rotate(0.5deg);
+            }
+        }
+
+        /* Partículas de polvo detrás del rover */
+        .dust-particle {
+            position: absolute;
+            bottom: 80px;
+            width: 4px;
+            height: 4px;
+            background: rgba(139, 69, 19, 0.6);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .dust1 {
+            animation: dust-float1 2s ease-out infinite;
+        }
+
+        .dust2 {
+            animation: dust-float2 2.5s ease-out infinite;
+        }
+
+        .dust3 {
+            animation: dust-float3 3s ease-out infinite;
+        }
+
+        @keyframes dust-float1 {
+            0% {
+                left: 15%;
+                opacity: 0;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 0.6;
+            }
+            100% {
+                left: 10%;
+                opacity: 0;
+                transform: translateY(-30px) translateX(-10px);
+            }
+        }
+
+        @keyframes dust-float2 {
+            0% {
+                left: 15%;
+                opacity: 0;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                left: 12%;
+                opacity: 0;
+                transform: translateY(-25px) translateX(-5px);
+            }
+        }
+
+        @keyframes dust-float3 {
+            0% {
+                left: 15%;
+                opacity: 0;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 0.4;
+            }
+            100% {
+                left: 11%;
+                opacity: 0;
+                transform: translateY(-20px) translateX(-8px);
+            }
+        }
+
+        /* Planetas y lunas de fondo */
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .planet1 {
+            width: 60px;
+            height: 60px;
+            top: 20px;
+            right: 80px;
+            background: radial-gradient(circle at 30% 30%, #FF6B6B, #C92A2A);
+            box-shadow: 0 0 30px rgba(255, 107, 107, 0.4);
+            animation: planet-glow1 4s ease-in-out infinite;
+        }
+
+        .planet2 {
+            width: 40px;
+            height: 40px;
+            top: 60px;
+            left: 100px;
+            background: radial-gradient(circle at 35% 35%, #4ECDC4, #1A535C);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+            animation: planet-glow2 5s ease-in-out infinite;
+        }
+
+        @keyframes planet-glow1 {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(255, 107, 107, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 50px rgba(255, 107, 107, 0.7);
+            }
+        }
+
+        @keyframes planet-glow2 {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(78, 205, 196, 0.6);
+            }
+        }
+
+        /* Estrellas fugaces */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .star1 {
+            top: 30px;
+            animation: shooting1 3s ease-in infinite;
+        }
+
+        .star2 {
+            top: 80px;
+            animation: shooting2 5s ease-in infinite;
+        }
+
+        @keyframes shooting1 {
+            0% {
+                left: 100%;
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                left: 0%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes shooting2 {
+            0% {
+                left: 100%;
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                left: 0%;
+                opacity: 0;
+            }
+        }
+
+        .info {
+            margin-top: 20px;
+            text-align: center;
+            color: #8B7BFF;
+            font-size: 14px;
+        }
 
 .project-intro:hover {
     border-color: #486f1c;
-    transform: scale(2);
+    transform: scale(1.1);
     box-shadow: 0 15px 50px rgba(255, 200, 87, 0.2);
 }
 
+.Cont_Txt_Proyect{
+    margin-top: 20px;
+    background-color: #6C75A3;
+    border-radius: 15px;
+    padding: 10px 30px;
+}
+
 .text_proyect{
-    color: white;
     transition: transform 0.5s ease;
 }
 
-/* .text_proyect:hover{
-    transform: scale(1.1);
-} */
 
-.intro-icon {
-    margin: 0 auto 2rem;
-    width: 80px;
-    height: 80px;
-    animation: float 3s ease-in-out infinite;
-}
+
 
 @keyframes float {
     0%, 100% {
@@ -356,8 +738,74 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2.5rem;
     margin-top: 3rem;
+    margin-bottom: 3rem;
+
 }
 
+.image_card1{
+    background-image: url(../images/IMG_9072.jpg);
+}
+
+.image_card1{
+    background-image: url(../images/IMG_9072.jpg);
+}
+
+.image_card1{
+    background-image: url(../images/IMG_9072.jpg);
+}
+
+.Card_Imag{
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid black; */
+    border: 2px solid transparent;
+    border-radius: 15px;
+    align-items: end;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: transform 0.5s ease;
+
+}
+
+.rover_Card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    /* border: 1px solid black; */
+}
+
+.rover_Card canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+
+.Text_Cards{
+    text-align: center;
+    color: white;
+    padding: 10px 30px;
+    background: transparent;
+    transition: transform 0.5s ease;
+}
+
+.Cont_Text_Card{
+    /* border: 1px solid black; */
+    border-radius: 15px;
+    background: transparent;
+    backdrop-filter: blur(2px);
+
+}
+
+.Card_Imag:hover{
+    transform: scale(1.1);
+    .Text_Cards{
+    transform: scale(1.1);
+    }
+}
 .feature-item {
     background: linear-gradient(135deg, var(--bg-white) 0%, #f8f9ff 100%);
     padding: 2.5rem 2rem;
@@ -588,7 +1036,8 @@ body {
     font-size: 2.5rem;
     text-align: center;
     margin-bottom: 3rem;
-    color: #486f1c;
+    color: white;
+    font-size: 90px;
     /* position: relative; */
     padding-bottom: 1rem;
 }
@@ -2279,7 +2728,14 @@ body {
     .project-features {
         grid-template-columns: 1fr;
         gap: 2rem;
+        border: 1px solid black;
     }
+
+    .Card_Image{
+        
+    }
+
+
 
     .feature-item {
         padding: 2rem 1.5rem;
