@@ -446,3 +446,134 @@ if (document.getElementById('hero-canvas-container')) {
         setTimeout(initHeroScene, 100);
     });
 }
+
+function initSTL3D(containerId, stlPath, options = {}) {
+    const container = document.getElementById(containerId);
+    if (!container) {
+        console.error(`[STL3D] ❌ No se encontró #${containerId}`);
+        return;
+    }
+
+    if (typeof THREE === 'undefined' || typeof THREE.STLLoader === 'undefined') {
+        console.error('[STL3D] ❌ THREE o STLLoader no están cargados');
+        return;
+    }
+
+    // Opciones con valores por defecto
+    const config = {
+        color:      options.color      ?? 0xb0b0b0,
+        metalness:  options.metalness  ?? 0.75,
+        roughness:  options.roughness  ?? 0.25,
+        yAmp:       options.yAmp       ?? 5,
+        ySpeed:     options.ySpeed     ?? 0.7,
+        tiltAmp:    options.tiltAmp    ?? 0.025,
+        tiltSpeed:  options.tiltSpeed  ?? 0.5,
+        rotSpeed:   options.rotSpeed   ?? 0.003,
+        normalSize: options.normalSize ?? 150,
+    };
+
+    // ── Escena ───────────────────────────────────────────────
+    const scene  = new THREE.Scene();
+    const width  = container.clientWidth  || 400;
+    const height = container.clientHeight || 300;
+
+    // ── Cámara ───────────────────────────────────────────────
+    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 10000);
+    camera.position.set(0, 0, 500);
+    camera.lookAt(0, 0, 0);
+
+    // ── Renderer ─────────────────────────────────────────────
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setClearColor(0x000000, 0);
+    container.appendChild(renderer.domElement);
+
+    // ── Luces ────────────────────────────────────────────────
+    scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+
+    const dir1 = new THREE.DirectionalLight(0xffffff, 1.5);
+    dir1.position.set(200, 300, 200);
+    scene.add(dir1);
+
+    const dir2 = new THREE.DirectionalLight(0x88aaff, 0.6);
+    dir2.position.set(-200, 100, -200);
+    scene.add(dir2);
+
+    const rim = new THREE.PointLight(0x00d4ff, 1.0, 2000);
+    rim.position.set(-300, 200, -200);
+    scene.add(rim);
+
+    // ── Carga del STL ────────────────────────────────────────
+    let mesh = null;
+
+    const loader = new THREE.STLLoader();
+    loader.load(
+        stlPath,
+        function (geometry) {
+            geometry.computeVertexNormals();
+            geometry.center();
+
+            const box    = new THREE.Box3().setFromObject(new THREE.Mesh(geometry));
+            const size   = box.getSize(new THREE.Vector3());
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const scale  = 300 / maxDim;
+
+            const material = new THREE.MeshStandardMaterial({
+                color:     config.color,
+                metalness: config.metalness,
+                roughness: config.roughness,
+            });
+
+            mesh = new THREE.Mesh(geometry, material);
+            mesh.scale.setScalar(scale);
+
+            // Ajuste automático de cámara
+            const fov  = camera.fov * (Math.PI / 180);
+            const dist = (config.normalSize / 2) / Math.tan(fov / 2) * 2.5;
+            camera.position.set(0, 50, dist);
+            camera.lookAt(0, 0, 0);
+
+            scene.add(mesh);
+        },
+        undefined,
+        function (error) {
+            console.error(`[STL3D] ❌ Error cargando ${stlPath}:`, error);
+        }
+    );
+
+    // ── Animación de flotación ────────────────────────────────
+    const clock = new THREE.Clock();
+
+    function animate() {
+        requestAnimationFrame(animate);
+
+        const t = clock.getElapsedTime();
+
+        if (mesh) {
+            mesh.position.y  = Math.sin(t * config.ySpeed)         * config.yAmp
+                             + Math.sin(t * config.ySpeed * 2.3)   * (config.yAmp * 0.25);
+            mesh.rotation.z  = Math.sin(t * config.tiltSpeed)      * config.tiltAmp
+                             + Math.sin(t * config.tiltSpeed * 1.7) * (config.tiltAmp * 0.4);
+            mesh.rotation.y += config.rotSpeed;
+        }
+
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    // ── Resize responsivo ────────────────────────────────────
+    new ResizeObserver(() => {
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        if (w === 0 || h === 0) return;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+    }).observe(container);
+}
+
+// ── Inicializar las 3 cards ───────────────────────────────────
+initSTL3D('rover3d',     '../stl/ROVER%202025%20MOVIL.stl');
+initSTL3D('brazo3d',     '../stl/ROVER%202025%20MOVIL.stl');
+initSTL3D('chasis3d',    '../stl/ROVER%202025%20MOVIL.stl');
