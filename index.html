@@ -3,440 +3,420 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Proyecto Rover universitario para representar a la universidad en el University Rover Challenge en Estados Unidos.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/principal.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <!-- Three.js r128 con STLLoader garantizado -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
-    <title>MILIMARS - Proyecto Rover</title>
+    <title>MILIMARS | Proyecto Rover</title>
 </head>
-<body>
-    <header class="header">
+<body class="index-page">
+    <header class="header site-header">
         <div class="container">
-            <nav class="navbar">
-                <div class="logo-container">
+            <nav class="navbar" aria-label="Navegación principal">
+                <a class="logo-container" href="#inicio" aria-label="MILIMARS inicio">
                     <img src="images/logo.png" alt="MILIMARS Logo" class="logo">
                     <span class="logo-text">MILIMARS</span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="index.html" class="nav-link active">Proyecto</a></li>
-                    <li><a href="rover.html" class="nav-link">Rover</a></li>
+                </a>
+
+                <button class="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" data-nav-toggle>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <ul class="nav-links" data-nav-menu>
+                    <li><a href="#proyecto" class="nav-link active">Proyecto</a></li>
+                    <li><a href="#rover" class="nav-link">Rover</a></li>
+                    <li><a href="#areas" class="nav-link">Áreas</a></li>
+                    <li><a href="#lideres" class="nav-link">Equipo</a></li>
+                    <li><a href="#progreso" class="nav-link">Progreso</a></li>
                     <li><a href="competencia.html" class="nav-link">Competencia</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-    <section class="primera">
-        <div class="carousel">
-            <div class="carousel-track">
-                <div class="carousel-slide slide-1">
-                    <div class="slide-content">
-                        <h2>Slide 1</h2>
-                        <p>Contenido temporal - Imagen próximamente</p>
-                    </div>
-                </div>
-                <div class="carousel-slide slide-2">
-                    <div class="slide-content">
-                        <h2>Slide 2</h2>
-                        <p>Contenido temporal - Imagen próximamente</p>
-                    </div>
-                </div>
-                <div class="carousel-slide slide-3">
-                    <div class="slide-content">
-                        <h2>Slide 3</h2>
-                        <p>Contenido temporal - Imagen próximamente</p>
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-indicators">
-                <span class="indicator active" data-slide="0"></span>
-                <span class="indicator" data-slide="1"></span>
-                <span class="indicator" data-slide="2"></span>
-            </div>
-        </div>
-    </section>
-    <section class="segunda">
-        <div class="container flex_colum">
-            <h2 class="section-title animate-on-scroll Text_Black">Nuestro Proyecto</h2>
 
-            <div class="project-content animate-on-scroll">
-                <div class="project-intro1 ">
-                    
-                    <div class="Cont_animation">
-                        <div class="planet planet1"></div>
-                        <div class="planet planet2"></div>
-                        <div class="shooting-star star1"></div>
-                        <div class="shooting-star star2"></div>
-                        <div class="crater crater1"></div>
-                        <div class="crater crater2"></div>
-                        <div class="crater crater3"></div>
-                        <div class="dust-particle dust1"></div>
-                        <div class="dust-particle dust2"></div>
-                        <div class="dust-particle dust3"></div>
+    <main>
+        <section id="inicio" class="hero mission-hero">
+            <canvas id="starfield-canvas" class="starfield-canvas" aria-hidden="true"></canvas>
+            <div class="orbital-grid" aria-hidden="true"></div>
 
-                        <div class="cont_carretera flex_row">
-                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64px" height="64px"><g><path style="fill:#434A54;" d="M37.828,10.375C33,7,26.344,8.188,22.984,13.031c-3.375,4.828-2.172,11.484,2.641,14.844 l92.219,64.266l12.188-17.5L37.828,10.375z"></path><g><path style="fill:#656D78;" d="M456.25,442.219l28.625,63.531l19.453-8.766l-76.266-169.188c-1.109-2.344-3.094-4.266-5.484-5.297 l-69.062-29.141l-8.297,19.656l55,23.203l-47.25,67.234l-7.922-1.312l-3.484,21.047L456.25,442.219z M445.703,418.844 l-69.391-11.516l39.125-55.641L445.703,418.844z"></path><path style="fill:#656D78;" d="M170.469,423.188l-3.5-21.047l-7.906,1.312l-47.281-67.234l55-23.203l-8.281-19.656L89.438,322.5 c-2.406,1.031-4.375,2.953-5.484,5.297L7.688,496.984l19.453,8.766l28.641-63.531L170.469,423.188z M96.594,351.688l39.109,55.641 l-69.391,11.516L96.594,351.688z"></path></g><rect x="149.34" y="298.67" style="fill:#CCD1D9;" width="213.33" height="128"></rect><polygon style="fill:#E6E9ED;" points="149.344,320 64,149.219 160,0 352,0 448,149.219 362.672,320"></polygon><path style="fill:#AAB2BD;" d="M362.672,160c0,58.922-47.766,106.672-106.672,106.672 S149.344,218.922,149.344,160c0-58.906,47.75-106.656,106.656-106.656S362.672,101.094,362.672,160z"></path><g><path style="fill:#CCD1D9;" d="M149.344,160c0,19.438,5.188,37.641,14.281,53.344h51.5v-64h-65.25 C149.531,152.844,149.344,156.406,149.344,160z"></path><rect x="289.56" y="149.34" style="fill:#CCD1D9;" width="55.31" height="21.328"></rect></g><rect x="213.34" y="170.67" width="85.33" height="21.328"></rect><path style="fill:#656D78;" d="M256,330.672c-5.875,0-10.656,4.781-10.656,10.672v166.594h21.328V341.344 C266.672,335.453,261.906,330.672,256,330.672z"></path><g><path style="fill:#434A54;" d="M32,490.672H10.672C4.781,490.672,0,495.453,0,501.344S4.781,512,10.672,512H32 c5.906,0,10.672-4.766,10.672-10.656S37.906,490.672,32,490.672z"></path><path style="fill:#434A54;" d="M266.672,490.609h-21.328c-5.891,0-10.672,4.781-10.672,10.672s4.781,10.656,10.672,10.656h21.328 c5.891,0,10.672-4.766,10.672-10.656S272.562,490.609,266.672,490.609z"></path><path style="fill:#434A54;" d="M501.344,490.672H480c-5.875,0-10.656,4.781-10.656,10.672S474.125,512,480,512h21.344 c5.891,0,10.656-4.766,10.656-10.656S507.234,490.672,501.344,490.672z"></path></g><path style="fill:#CCD1D9;" d="M298.672,257.781c37.672-16.453,64-54.031,64-97.781c0-3.594-0.172-7.156-0.516-10.656h-63.484 V257.781z"></path><path style="fill:#656D78;" d="M213.344,257.781c13.062,5.719,27.5,8.891,42.656,8.891c15.188,0,29.609-3.172,42.672-8.891v-87.109 h-85.328V257.781z"></path><path style="fill:#F5F7FA;" d="M213.344,170.672h85.328v0.016l0.203-0.016l-9.312-111.953C279,55.234,267.719,53.344,256,53.344 c-11.625,0-22.844,1.859-33.312,5.312L213.344,170.672L213.344,170.672L213.344,170.672z"></path></g></svg>
-                            <svg height="120px" width="120px" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.002 512.002"><g><g><path style="fill:#E9573F;" d="M103.1,496.672c-10.984,0-24.508-5.922-36.172-15.828c-9.547-8.094-16.859-18.172-20.07-27.641 c-2.578-7.594-2.281-14.031,0.812-17.688c2.922-3.438,7.961-4.156,11.672-4.156c10.992,0,24.516,5.906,36.18,15.812 c9.539,8.109,16.852,18.188,20.062,27.641c2.578,7.594,2.289,14.047-0.812,17.688C111.858,495.938,106.819,496.672,103.1,496.672z"></path><path style="fill:#E9573F;" d="M493.33,258.346c-9.266,0-29.594-18.406-43.688-52.953c-7.094-17.374-11.016-35.437-10.781-49.546 c0.219-11.984,3.344-18.578,6.344-19.812c0.5-0.203,1.031-0.297,1.656-0.297c9.25,0,29.594,18.406,43.688,52.969 c7.094,17.374,11,35.421,10.781,49.53c-0.219,11.984-3.344,18.594-6.344,19.812C494.486,258.252,493.955,258.346,493.33,258.346z"></path><path style="fill:#E9573F;" d="M104.483,69.332c-10.297,0-17.891-3.109-20.336-8.328c-2.023-4.328-0.617-10.625,3.867-17.281 c5.586-8.281,15.289-16.078,26.625-21.391c9.625-4.5,19.883-6.984,28.898-6.984c10.297,0,17.898,3.109,20.336,8.312 c2.023,4.328,0.617,10.625-3.867,17.281c-5.586,8.281-15.289,16.078-26.625,21.391C123.764,66.848,113.499,69.332,104.483,69.332z"></path></g><path style="fill:#FC6E51;" d="M500.424,184.675c-14.266-34.969-36.938-59.594-53.562-59.594c-1.984,0-3.891,0.344-5.688,1.078 l-24.656,10.828c-25.905-36.141-62.007-64.452-104.115-80.718c0.156-0.734,0.242-1.484,0.242-2.266 c0-5.891-4.773-10.656-10.664-10.656c-4.297,0-7.992,2.547-9.68,6.203c-19.906-5.641-40.921-8.656-62.632-8.656 c-15.039,0-29.734,1.469-43.968,4.234l-12.172-25.984c-4.445-9.5-15.852-14.469-29.992-14.469c-10.242,0-21.929,2.609-33.421,8 c-27.344,12.813-43.297,36.47-35.625,52.86l11.953,25.5c-17.836,14.249-33.492,31.093-46.414,49.968 c-1.953-2.25-4.82-3.672-8.031-3.672c-5.891,0-10.664,4.781-10.664,10.672c0,4.938,3.375,9.094,7.945,10.297 C10.632,191.487,0,229.783,0,270.564c0,17.281,1.914,34.125,5.539,50.312C2.242,322.688,0,326.204,0,330.234 c0,5.875,4.773,10.656,10.664,10.656c0.109,0,0.211-0.016,0.32-0.016c8.765,27.266,22.476,52.327,40.093,74.093l-11.531,13.641 c-11.711,13.797-2.547,40.828,20.476,60.375c14.086,11.953,30.094,18.344,43.078,18.344c8.234,0,15.257-2.562,19.804-7.922 l15.328-18.109c28.015,12.172,58.937,18.938,91.437,18.938c33.624,0,65.546-7.234,94.327-20.219 c1.508,4.047,5.406,6.938,9.984,6.938c5.89,0,10.663-4.766,10.663-10.656c0-2.172-0.656-4.188-1.766-5.875 c34.984-19.875,64.233-48.656,84.671-83.266c1.594,0.938,3.438,1.484,5.406,1.484c5.906,0,10.672-4.781,10.672-10.671 c0-4.266-2.5-7.922-6.109-9.641c12.031-25.531,19.5-53.624,21.344-83.265l40.156-17.125 C515.768,261.096,516.393,223.83,500.424,184.675z"></path><g><path style="fill:#E9573F;" d="M319.324,155.972c-2.641,20.562-28.461,34.188-57.672,30.438 c-29.21-3.75-50.749-23.469-48.108-44.031c2.641-20.547,28.46-34.172,57.671-30.422 C300.434,115.706,321.973,135.425,319.324,155.972z"></path><path style="fill:#E9573F;" d="M356.401,328.064c10.922,17.093,3.477,41.374-16.633,54.232c-20.116,12.859-45.28,9.438-56.21-7.655 c-10.93-17.078-3.484-41.359,16.633-54.218C320.309,307.549,345.472,310.986,356.401,328.064z"></path><path style="fill:#E9573F;" d="M228.528,281.986c0,35.344-33.429,63.983-74.664,63.983c-41.226,0-74.655-28.64-74.655-63.983 s33.43-64,74.655-64C195.099,217.986,228.528,246.643,228.528,281.986z"></path></g></g></svg>
-                            <svg height="60px" width="60px" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path style="fill:#E6E9ED;" d="M320.008,0v246.234H192.023V0C105.461,27.188,42.664,108.031,42.664,203.562V512h426.672V203.562 C469.336,108.047,406.555,27.188,320.008,0z"></path><rect x="192.02" y="54.23" style="fill:#CCD1D9;" width="127.98" height="192"></rect><path style="fill:#FFCE54;" d="M256.023,171.562c-17.656,0-32.016-14.359-32.016-32c0-17.656,14.359-32,32.016-32 c17.625,0,31.984,14.344,31.984,32C288.008,157.203,273.648,171.562,256.023,171.562z"></path><path style="fill:#434A54;" d="M256.023,96.891c-23.578,0-42.688,19.109-42.688,42.672s19.109,42.656,42.688,42.656 c23.562,0,42.656-19.094,42.656-42.656S279.586,96.891,256.023,96.891z M256.023,160.891c-11.781,0-21.344-9.562-21.344-21.328 s9.562-21.344,21.344-21.344c11.75,0,21.312,9.578,21.312,21.344S267.773,160.891,256.023,160.891z"></path><path style="fill:#CCD1D9;" d="M479.992,341.328h-448c-5.875,0-10.656,4.766-10.656,10.672c0,5.891,4.781,10.672,10.656,10.672h448 c5.906,0,10.672-4.781,10.672-10.672C490.664,346.094,485.898,341.328,479.992,341.328z"></path><path style="fill:#656D78;" d="M255.992,405.328c-23.562,0-42.656,19.109-42.656,42.672v64h85.328v-64 C298.664,424.438,279.57,405.328,255.992,405.328z"></path></g></svg>
-                            <!-- <svg height="60px" width="60px" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><rect x="245.34" style="fill:#434A54;" width="21.328" height="277.33"></rect><path style="fill:#E6E9ED;" d="M256.004,256c-141.383,0-256,114.609-256,256h511.992C511.996,370.609,397.387,256,256.004,256z"></path><polygon style="fill:#DA4453;" points="479.996,170.656 330.668,170.656 330.668,42.656 479.996,42.656 458.684,106.656"></polygon><rect x="266.67" style="fill:#ED5565;" width="128" height="128"></rect><g><path style="fill:#CCD1D9;" d="M160.004,426.656c0,17.688-14.328,32-32,32s-32-14.312-32-32c0-17.672,14.328-32,32-32 S160.004,408.984,160.004,426.656z"></path><circle style="fill:#CCD1D9;" cx="394.67" cy="437.33" r="32"></circle><path style="fill:#CCD1D9;" d="M298.668,362.656c0,23.578-19.102,42.672-42.664,42.672s-42.664-19.094-42.664-42.672 c0-23.562,19.102-42.656,42.664-42.656S298.668,339.094,298.668,362.656z"></path></g></g></svg> -->
-                            <svg height="200px" width="200px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 512 512" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path style="fill:#ED5565;" d="M512,255.996C512,397.389,397.404,512,256.004,512C114.627,512,0,397.389,0,255.996 C0,114.611,114.627,0,256.004,0C397.404,0,512,114.611,512,255.996z"></path> <g> <path style="fill:#DA4453;" d="M291.349,241.559c-37.845,7.953-75.751,9.008-112.658,3.148 c-29.906-4.742-59.282-14.008-87.313-27.531c-38.032-18.337-64.72-40.454-75.345-50.485c-2.72,7.258-5.095,14.68-7.157,22.234 c14.626,12.579,39.657,31.22,72.814,47.259c29.938,14.5,61.345,24.438,93.345,29.547c16.875,2.688,33.907,4.039,51.063,4.039 c23.094,0,46.407-2.445,69.626-7.328c74.501-15.656,131.463-13.898,166.151-9.664c24,2.922,40.906,7.406,50.031,10.273 c0.062-2.344,0.094-4.695,0.094-7.055c0-5.141-0.156-10.242-0.438-15.312c-10.5-2.93-25.906-6.438-45.906-8.938 C399.561,223.473,334.381,232.52,291.349,241.559z"></path> <path style="fill:#DA4453;" d="M503,323.56c-12.438,3.562-43.812,11.938-83.438,17.938c-85.118,12.906-142.307,5.188-175.276-3.562 c-74.095-19.657-135.689-17.032-174.347-11.376c-25.562,3.75-44.625,9.219-55.969,13.063c2.344,6.75,4.969,13.391,7.844,19.875 c10.562-3.5,28.438-8.547,52.125-11.953c36.501-5.25,94.721-7.594,164.878,11.016c28.219,7.484,59.907,11.234,94.689,11.234 c27.906,0,57.836-2.422,89.618-7.25c30.282-4.609,55.532-10.438,71.907-14.688C498.062,339.936,500.75,331.841,503,323.56z"></path> <path style="fill:#DA4453;" d="M355.287,454.968c-12.5-7.75-27.281-13-44.001-15.594c-20.281-3.172-43.501-2.422-69.001,2.219 c-72.657,13.25-155.877-1.141-165.628-2.922c9.657,9.469,20.032,18.172,31.063,26.048c34.376,3.875,88.063,7.031,138.377-2.126 c40.157-7.312,73.564-3.969,96.627,9.688c9.875,5.875,15.844,12.375,19.156,16.875c6.562-2.984,12.961-6.234,19.18-9.734 C376.904,473.062,368.975,463.468,355.287,454.968z"></path> <path style="fill:#DA4453;" d="M489.344,150.557c-14,1.61-48.438,4.993-89.783,4.907c-70.461-0.148-128.837-10.258-168.775-29.243 c-49.563-23.547-99.221-31.953-132.127-34.859c-14.719-1.297-27.376-1.656-37.313-1.617c-5.969,6.969-11.562,14.266-16.75,21.859 c19.281-1.18,98.752-3.297,177.034,33.883c43.469,20.649,103.408,31.18,178.213,31.305c0.438,0,0.875,0,1.312,0 c49.689,0,88.502-4.711,96.408-5.742C495.125,164.073,492.375,157.237,489.344,150.557z"></path> <path style="fill:#DA4453;" d="M436.968,74.931C402.123,74.986,326.631,72.58,284.13,52.36 c-39.157-18.633-90.502-28.336-125.627-33.133c-12.094,4.985-23.72,10.868-34.813,17.571c22.845,2.008,99.846,10.352,151.253,34.82 c45.845,21.806,122.431,24.696,159.807,24.696c11.095,0,18.72-0.258,21.095-0.344C449.938,88.611,443.656,81.587,436.968,74.931z"></path> <ellipse style="fill:#DA4453;" cx="170.69" cy="394.67" rx="64" ry="32"></ellipse> </g> </g></svg>
-                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64px" height="64px"><g><path style="fill:#434A54;" d="M37.828,10.375C33,7,26.344,8.188,22.984,13.031c-3.375,4.828-2.172,11.484,2.641,14.844 l92.219,64.266l12.188-17.5L37.828,10.375z"></path><g><path style="fill:#656D78;" d="M456.25,442.219l28.625,63.531l19.453-8.766l-76.266-169.188c-1.109-2.344-3.094-4.266-5.484-5.297 l-69.062-29.141l-8.297,19.656l55,23.203l-47.25,67.234l-7.922-1.312l-3.484,21.047L456.25,442.219z M445.703,418.844 l-69.391-11.516l39.125-55.641L445.703,418.844z"></path><path style="fill:#656D78;" d="M170.469,423.188l-3.5-21.047l-7.906,1.312l-47.281-67.234l55-23.203l-8.281-19.656L89.438,322.5 c-2.406,1.031-4.375,2.953-5.484,5.297L7.688,496.984l19.453,8.766l28.641-63.531L170.469,423.188z M96.594,351.688l39.109,55.641 l-69.391,11.516L96.594,351.688z"></path></g><rect x="149.34" y="298.67" style="fill:#CCD1D9;" width="213.33" height="128"></rect><polygon style="fill:#E6E9ED;" points="149.344,320 64,149.219 160,0 352,0 448,149.219 362.672,320"></polygon><path style="fill:#AAB2BD;" d="M362.672,160c0,58.922-47.766,106.672-106.672,106.672 S149.344,218.922,149.344,160c0-58.906,47.75-106.656,106.656-106.656S362.672,101.094,362.672,160z"></path><g><path style="fill:#CCD1D9;" d="M149.344,160c0,19.438,5.188,37.641,14.281,53.344h51.5v-64h-65.25 C149.531,152.844,149.344,156.406,149.344,160z"></path><rect x="289.56" y="149.34" style="fill:#CCD1D9;" width="55.31" height="21.328"></rect></g><rect x="213.34" y="170.67" width="85.33" height="21.328"></rect><path style="fill:#656D78;" d="M256,330.672c-5.875,0-10.656,4.781-10.656,10.672v166.594h21.328V341.344 C266.672,335.453,261.906,330.672,256,330.672z"></path><g><path style="fill:#434A54;" d="M32,490.672H10.672C4.781,490.672,0,495.453,0,501.344S4.781,512,10.672,512H32 c5.906,0,10.672-4.766,10.672-10.656S37.906,490.672,32,490.672z"></path><path style="fill:#434A54;" d="M266.672,490.609h-21.328c-5.891,0-10.672,4.781-10.672,10.672s4.781,10.656,10.672,10.656h21.328 c5.891,0,10.672-4.766,10.672-10.656S272.562,490.609,266.672,490.609z"></path><path style="fill:#434A54;" d="M501.344,490.672H480c-5.875,0-10.656,4.781-10.656,10.672S474.125,512,480,512h21.344 c5.891,0,10.656-4.766,10.656-10.656S507.234,490.672,501.344,490.672z"></path></g><path style="fill:#CCD1D9;" d="M298.672,257.781c37.672-16.453,64-54.031,64-97.781c0-3.594-0.172-7.156-0.516-10.656h-63.484 V257.781z"></path><path style="fill:#656D78;" d="M213.344,257.781c13.062,5.719,27.5,8.891,42.656,8.891c15.188,0,29.609-3.172,42.672-8.891v-87.109 h-85.328V257.781z"></path><path style="fill:#F5F7FA;" d="M213.344,170.672h85.328v0.016l0.203-0.016l-9.312-111.953C279,55.234,267.719,53.344,256,53.344 c-11.625,0-22.844,1.859-33.312,5.312L213.344,170.672L213.344,170.672L213.344,170.672z"></path></g></svg>
-                            <svg height="60px" width="60px" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path style="fill:#E6E9ED;" d="M320.008,0v246.234H192.023V0C105.461,27.188,42.664,108.031,42.664,203.562V512h426.672V203.562 C469.336,108.047,406.555,27.188,320.008,0z"></path><rect x="192.02" y="54.23" style="fill:#CCD1D9;" width="127.98" height="192"></rect><path style="fill:#FFCE54;" d="M256.023,171.562c-17.656,0-32.016-14.359-32.016-32c0-17.656,14.359-32,32.016-32 c17.625,0,31.984,14.344,31.984,32C288.008,157.203,273.648,171.562,256.023,171.562z"></path><path style="fill:#434A54;" d="M256.023,96.891c-23.578,0-42.688,19.109-42.688,42.672s19.109,42.656,42.688,42.656 c23.562,0,42.656-19.094,42.656-42.656S279.586,96.891,256.023,96.891z M256.023,160.891c-11.781,0-21.344-9.562-21.344-21.328 s9.562-21.344,21.344-21.344c11.75,0,21.312,9.578,21.312,21.344S267.773,160.891,256.023,160.891z"></path><path style="fill:#CCD1D9;" d="M479.992,341.328h-448c-5.875,0-10.656,4.766-10.656,10.672c0,5.891,4.781,10.672,10.656,10.672h448 c5.906,0,10.672-4.781,10.672-10.672C490.664,346.094,485.898,341.328,479.992,341.328z"></path><path style="fill:#656D78;" d="M255.992,405.328c-23.562,0-42.656,19.109-42.656,42.672v64h85.328v-64 C298.664,424.438,279.57,405.328,255.992,405.328z"></path></g></svg>
-                            <svg height="60px" width="60px" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.002 512.002"><g><g><path style="fill:#E9573F;" d="M103.1,496.672c-10.984,0-24.508-5.922-36.172-15.828c-9.547-8.094-16.859-18.172-20.07-27.641 c-2.578-7.594-2.281-14.031,0.812-17.688c2.922-3.438,7.961-4.156,11.672-4.156c10.992,0,24.516,5.906,36.18,15.812 c9.539,8.109,16.852,18.188,20.062,27.641c2.578,7.594,2.289,14.047-0.812,17.688C111.858,495.938,106.819,496.672,103.1,496.672z"></path><path style="fill:#E9573F;" d="M493.33,258.346c-9.266,0-29.594-18.406-43.688-52.953c-7.094-17.374-11.016-35.437-10.781-49.546 c0.219-11.984,3.344-18.578,6.344-19.812c0.5-0.203,1.031-0.297,1.656-0.297c9.25,0,29.594,18.406,43.688,52.969 c7.094,17.374,11,35.421,10.781,49.53c-0.219,11.984-3.344,18.594-6.344,19.812C494.486,258.252,493.955,258.346,493.33,258.346z"></path><path style="fill:#E9573F;" d="M104.483,69.332c-10.297,0-17.891-3.109-20.336-8.328c-2.023-4.328-0.617-10.625,3.867-17.281 c5.586-8.281,15.289-16.078,26.625-21.391c9.625-4.5,19.883-6.984,28.898-6.984c10.297,0,17.898,3.109,20.336,8.312 c2.023,4.328,0.617,10.625-3.867,17.281c-5.586,8.281-15.289,16.078-26.625,21.391C123.764,66.848,113.499,69.332,104.483,69.332z"></path></g><path style="fill:#FC6E51;" d="M500.424,184.675c-14.266-34.969-36.938-59.594-53.562-59.594c-1.984,0-3.891,0.344-5.688,1.078 l-24.656,10.828c-25.905-36.141-62.007-64.452-104.115-80.718c0.156-0.734,0.242-1.484,0.242-2.266 c0-5.891-4.773-10.656-10.664-10.656c-4.297,0-7.992,2.547-9.68,6.203c-19.906-5.641-40.921-8.656-62.632-8.656 c-15.039,0-29.734,1.469-43.968,4.234l-12.172-25.984c-4.445-9.5-15.852-14.469-29.992-14.469c-10.242,0-21.929,2.609-33.421,8 c-27.344,12.813-43.297,36.47-35.625,52.86l11.953,25.5c-17.836,14.249-33.492,31.093-46.414,49.968 c-1.953-2.25-4.82-3.672-8.031-3.672c-5.891,0-10.664,4.781-10.664,10.672c0,4.938,3.375,9.094,7.945,10.297 C10.632,191.487,0,229.783,0,270.564c0,17.281,1.914,34.125,5.539,50.312C2.242,322.688,0,326.204,0,330.234 c0,5.875,4.773,10.656,10.664,10.656c0.109,0,0.211-0.016,0.32-0.016c8.765,27.266,22.476,52.327,40.093,74.093l-11.531,13.641 c-11.711,13.797-2.547,40.828,20.476,60.375c14.086,11.953,30.094,18.344,43.078,18.344c8.234,0,15.257-2.562,19.804-7.922 l15.328-18.109c28.015,12.172,58.937,18.938,91.437,18.938c33.624,0,65.546-7.234,94.327-20.219 c1.508,4.047,5.406,6.938,9.984,6.938c5.89,0,10.663-4.766,10.663-10.656c0-2.172-0.656-4.188-1.766-5.875 c34.984-19.875,64.233-48.656,84.671-83.266c1.594,0.938,3.438,1.484,5.406,1.484c5.906,0,10.672-4.781,10.672-10.671 c0-4.266-2.5-7.922-6.109-9.641c12.031-25.531,19.5-53.624,21.344-83.265l40.156-17.125 C515.768,261.096,516.393,223.83,500.424,184.675z"></path><g><path style="fill:#E9573F;" d="M319.324,155.972c-2.641,20.562-28.461,34.188-57.672,30.438 c-29.21-3.75-50.749-23.469-48.108-44.031c2.641-20.547,28.46-34.172,57.671-30.422 C300.434,115.706,321.973,135.425,319.324,155.972z"></path><path style="fill:#E9573F;" d="M356.401,328.064c10.922,17.093,3.477,41.374-16.633,54.232c-20.116,12.859-45.28,9.438-56.21-7.655 c-10.93-17.078-3.484-41.359,16.633-54.218C320.309,307.549,345.472,310.986,356.401,328.064z"></path><path style="fill:#E9573F;" d="M228.528,281.986c0,35.344-33.429,63.983-74.664,63.983c-41.226,0-74.655-28.64-74.655-63.983 s33.43-64,74.655-64C195.099,217.986,228.528,246.643,228.528,281.986z"></path></g></g></svg>
-                            <svg height="60px" width="60px" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><rect x="245.34" style="fill:#434A54;" width="21.328" height="277.33"></rect><path style="fill:#E6E9ED;" d="M256.004,256c-141.383,0-256,114.609-256,256h511.992C511.996,370.609,397.387,256,256.004,256z"></path><polygon style="fill:#DA4453;" points="479.996,170.656 330.668,170.656 330.668,42.656 479.996,42.656 458.684,106.656"></polygon><rect x="266.67" style="fill:#ED5565;" width="128" height="128"></rect><g><path style="fill:#CCD1D9;" d="M160.004,426.656c0,17.688-14.328,32-32,32s-32-14.312-32-32c0-17.672,14.328-32,32-32 S160.004,408.984,160.004,426.656z"></path><circle style="fill:#CCD1D9;" cx="394.67" cy="437.33" r="32"></circle><path style="fill:#CCD1D9;" d="M298.668,362.656c0,23.578-19.102,42.672-42.664,42.672s-42.664-19.094-42.664-42.672 c0-23.562,19.102-42.656,42.664-42.656S298.668,339.094,298.668,362.656z"></path></g></g></svg>
-                        </div>
-                        <!-- <div class="intro-icon">
-                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="64px" height="64px"><g><rect x="140.19" y="48" style="fill:#434A54;" width="179.81" height="64"></rect><polygon style="fill:#656D78;" points="321.844,217.922 276.594,263.172 116.062,102.625 161.312,57.375"></polygon><g><path style="fill:#CCD1D9;" d="M161.312,57.375c12.5,12.5,12.5,32.75,0,45.25s-32.75,12.5-45.25,0s-12.5-32.75,0-45.25 S148.812,44.875,161.312,57.375z"></path><path style="fill:#CCD1D9;" d="M362.688,282.656c0,58.922-47.781,106.688-106.688,106.688s-106.656-47.766-106.656-106.688 C149.344,223.75,197.094,176,256,176S362.688,223.75,362.688,282.656z"></path></g><g><path style="fill:#E6E9ED;" d="M512,389.344c0,11.781-9.531,21.312-21.312,21.312H21.344C9.562,410.656,0,401.125,0,389.344V304 c0-11.781,9.562-21.344,21.344-21.344h469.344c11.781,0,21.312,9.562,21.312,21.344V389.344z"></path><rect x="107.28" y="368" style="fill:#E6E9ED;" width="287.91" height="87.66"></rect></g><g><path style="fill:#CCD1D9;" d="M85.344,464C55.938,464,32,440.078,32,410.656c0-29.406,23.938-53.312,53.344-53.312 s53.344,23.906,53.344,53.312C138.688,440.078,114.75,464,85.344,464z"></path><path style="fill:#CCD1D9;" d="M426.688,464c-29.406,0-53.344-23.922-53.344-53.344c0-29.406,23.938-53.312,53.344-53.312 S480,381.25,480,410.656C480,440.078,456.094,464,426.688,464z"></path><path style="fill:#CCD1D9;" d="M256,464c-29.406,0-53.312-23.922-53.312-53.344c0-29.406,23.906-53.312,53.312-53.312 s53.344,23.906,53.344,53.312C309.344,440.078,285.406,464,256,464z"></path></g><g><path style="fill:#434A54;" d="M85.344,400c-5.875,0-10.656,4.781-10.656,10.656c0,5.906,4.781,10.688,10.656,10.688 c5.906,0,10.656-4.781,10.656-10.688C96,404.781,91.25,400,85.344,400z"></path><path style="fill:#434A54;" d="M426.688,400c-5.906,0-10.688,4.781-10.688,10.656c0,5.906,4.781,10.688,10.688,10.688 c5.875,0,10.656-4.781,10.656-10.688C437.344,404.781,432.562,400,426.688,400z"></path><path style="fill:#434A54;" d="M256,400c-5.875,0-10.656,4.781-10.656,10.656c0,5.906,4.781,10.688,10.656,10.688 c5.906,0,10.688-4.781,10.688-10.688C266.688,404.781,261.906,400,256,400z"></path><path style="fill:#434A54;" d="M426.688,346.656H85.344c-35.344,0-64,28.656-64,64c0,35.359,28.656,64,64,64h341.344 c35.344,0,64-28.641,64-64C490.688,375.312,462.031,346.656,426.688,346.656z M85.344,453.344 c-23.531,0-42.656-19.156-42.656-42.688C42.688,387.14,61.813,368,85.344,368S128,387.141,128,410.656 C128,434.188,108.875,453.344,85.344,453.344z M208.625,453.344H132.75c10.203-11.344,16.594-26.219,16.594-42.688 c0-16.453-6.375-31.312-16.594-42.656h75.875C198.406,379.344,192,394.203,192,410.656C192,427.125,198.406,442,208.625,453.344z M256,453.344c-23.5,0-42.656-19.156-42.656-42.688C213.344,387.141,232.5,368,256,368c23.531,0,42.688,19.141,42.688,42.656 C298.688,434.188,279.531,453.344,256,453.344z M379.281,453.344h-75.875C313.609,442,320,427.125,320,410.656 c0-16.453-6.375-31.312-16.594-42.656h75.875c-10.219,11.344-16.594,26.203-16.594,42.656 C362.688,427.125,369.078,442,379.281,453.344z M426.688,453.344c-23.531,0-42.688-19.156-42.688-42.688 C384,387.141,403.156,368,426.688,368s42.656,19.141,42.656,42.656C469.344,434.188,450.219,453.344,426.688,453.344z"></path><path style="fill:#434A54;" d="M394.688,90.656c-5.906,0-10.688,4.781-10.688,10.688h-56.656v-0.016H320V58.656h7.344H384l0,0 c0,5.906,4.781,10.688,10.688,10.688c5.875,0,10.656-4.781,10.656-10.688c0-11.781-9.562-21.312-21.344-21.312h-64 c-11.781,0-21.312,9.531-21.312,21.312v42.688c0,11.781,9.531,21.312,21.312,21.312h64c11.781,0,21.344-9.531,21.344-21.312 C405.344,95.438,400.562,90.656,394.688,90.656z"></path></g></g></svg>
-                        </div> -->
-                    </div>
-                    <div class="Cont_Txt_Proyect">
-                        <p class="Text_Medium text_proyect" style="color: white;">Nuestro proyecto nace con la misión de diseñar, construir y operar un rover exploratorio de alto rendimiento, capaz de superar las exigentes pruebas del <strong>University Rover Challenge (URC)</strong>, la competencia internacional más prestigiosa en robótica planetaria a nivel universitario. Impulsados por la pasión por la ingeniería, la exploración espacial y el trabajo multidisciplinario, buscamos crear una plataforma robótica innovadora, robusta y preparada para enfrentar escenarios similares a los de futuras misiones humanas a Marte.</p>
-                    </div>
-                </div>
+            <div class="container hero-grid">
+                <div class="hero-copy reveal">
+                    <p class="mission-kicker">University Rover Challenge | Estados Unidos</p>
+                    <h1>Proyecto Rover</h1>
+                    <p class="hero-lead">
+                        Un sistema robótico universitario diseñado para exploración análoga, navegación autónoma, manipulación de precisión y ciencia aplicada en terreno tipo Marte.
+                    </p>
 
-                <div class="project-features animate-on-scroll">
-                    <div class="Card_Imag image_card1 flex_colum">
-                        <div class="rover_Card" id="rover3d"></div>
-                        <div class="Cont_Text_Card">
-                            <p class="Text_Cards Text_Medium">Diseñamos un rover innovador para competir en el University Rover Challenge</p>
-                        </div>
+                    <div class="hero-actions">
+                        <a class="btn btn-primary" href="#patrocinio">Apoyar misión</a>
+                        <a class="btn btn-secondary" href="#rover">Ver rover 3D</a>
                     </div>
-                    <div class="Card_Imag image_card1 flex_colum">
-                        <div class="rover_Card" id="brazo3d"></div>
-                        <div class="Cont_Text_Card">
-                            <p class="Text_Cards Text_Medium">Buscamos crear una plataforma robótica robusta para exploración tipo Marte.</p>
+
+                    <div class="telemetry-strip" aria-label="Indicadores de misión">
+                        <div>
+                            <span class="telemetry-value" data-count="2026">0</span>
+                            <span class="telemetry-label">URC</span>
                         </div>
-                    </div>
-                    <div class="Card_Imag image_card1 flex_colum">
-                        <div class="rover_Card" id="chasis3d"></div>
-                        <div class="Cont_Text_Card">
-                            <p class="Text_Cards Text_Medium">Nuestro proyecto une ingeniería y pasión por la exploración espacial.</p>
+                        <div>
+                            <span class="telemetry-value" data-count="4">0</span>
+                            <span class="telemetry-label">Misiones</span>
+                        </div>
+                        <div>
+                            <span class="telemetry-value" data-count="5">0</span>
+                            <span class="telemetry-label">Áreas</span>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-    <section class="tercera">
-        <div class="container flex_colum">
-            <!-- Visión -->
-            <div class="ter_cont1 flex_row animate-on-scroll">
-                <div class="ter_image vision-image">
-                    <!-- Espacio para imagen de visión -->
-                </div>
-                <div class="ter_text">
-                    <div class="ter_icon">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" fill="#3A3F72"/>
-                        </svg>
-                    </div>
-                    <h2>VISIÓN</h2>
-                    <p>Convertirnos en un equipo de referencia en robótica espacial universitaria a nivel latinoamericano, desarrollando tecnología que inspire a nuevas generaciones de ingenieros y contribuya al avance de la exploración planetaria.</p>
-                </div>
-            </div>
 
-            <!-- Misión -->
-            <div class="ter_cont2 flex_row animate-on-scroll">
-                <div class="ter_text">
-                    <div class="ter_icon">
-                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 11.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V7.89l7-3.11v8.2z" fill="#FF9F1C"/>
-                        </svg>
+                <aside class="mission-console reveal" id="rover" aria-label="Visor 3D del rover">
+                    <div class="console-header">
+                        <span>STL LIVE VIEW</span>
+                        <span class="console-status">ONLINE</span>
                     </div>
-                    <h2>MISIÓN</h2>
-                    <p>Construir un rover capaz de realizar tareas científicas, de navegación autónoma, manipulación avanzada y soporte a operaciones análogas a misiones marcianas, cumpliendo con los estándares técnicos y operativos establecidos por el URC, mientras fomentamos el aprendizaje práctico y el trabajo en equipo interdisciplinario.</p>
+                    <div id="home-stl-viewer" class="stl-viewer" data-default-model="stl/ROVER 2025 MOVIL.STL">
+                        <div class="stl-loading" data-stl-loading>Cargando modelo 3D...</div>
+                    </div>
+                    <div class="model-controls" aria-label="Selector de modelo STL">
+                        <button class="model-selector active" type="button" data-stl="stl/ROVER 2025 MOVIL.STL" data-title="Rover 2025" data-copy="Plataforma móvil principal para operación en terreno análogo.">Rover</button>
+                        <button class="model-selector" type="button" data-stl="stl/BRAZO.STL" data-title="Brazo robótico" data-copy="Sistema de manipulación para paneles, herramientas y tareas de precisión.">Brazo</button>
+                        <button class="model-selector" type="button" data-stl="stl/ModuloVida.STL" data-title="Módulo de vida" data-copy="Prototipo de soporte e integración para escenarios de misión.">Módulo</button>
+                    </div>
+                    <div class="model-caption">
+                        <h2 data-model-title>Rover 2025</h2>
+                        <p data-model-copy>Plataforma móvil principal para operación en terreno análogo.</p>
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+        <section id="proyecto" class="section mission-profile">
+            <div class="container profile-grid">
+                <div class="section-copy reveal">
+                    <p class="section-kicker">Perfil de misión</p>
+                    <h2>Representar a la universidad con ingeniería de clase mundial.</h2>
+                    <p>
+                        El Proyecto Rover integra mecánica, electrónica, software, comunicaciones y ciencia para construir un robot exploratorio capaz de competir en el Rover Challenge University. La meta es validar tecnología, formar talento y conectar academia con industria.
+                    </p>
                 </div>
-                <div class="ter_image mision-image">
-                    <!-- Espacio para imagen de misión -->
+
+                <div class="profile-card meteor-profile reveal">
+                    <span class="card-signal">NAV OPS</span>
+                    <h3>Exploración análoga</h3>
+                    <p>Pruebas en terreno con navegación, teleoperación y autonomía progresiva.</p>
+                </div>
+                <div class="profile-card rocket-profile reveal">
+                    <span class="card-signal">BIO SCAN</span>
+                    <h3>Ciencia aplicada</h3>
+                    <p>Recolección y análisis de muestras para escenarios de búsqueda de vida.</p>
+                </div>
+                <div class="profile-card satellite-profile reveal">
+                    <span class="card-signal">STEM LAB</span>
+                    <h3>Impacto académico</h3>
+                    <p>Proyecto integrador para investigación, prototipado y formación interdisciplinaria.</p>
                 </div>
             </div>
-        </div>
-    </section>
-    <section class="cuarta">
-        <div class="container">
-            <h2 class="section-title animate-on-scroll">Áreas de Trabajo</h2>
+        </section>
 
-            <!-- Misiones Principales -->
-            <div class="missions-container">
-                <h3 class="subsection-title">Misiones Principales</h3>
-                <div class="missions-grid">
-                    <div class="mission-card">
-                        <div class="mission-icon">🔬</div>
-                        <h4>Misión Científica</h4>
-                        <p>Análisis de muestras y recolección de datos científicos en terreno marciano simulado.</p>
-                    </div>
-                    <div class="mission-card">
-                        <div class="mission-icon">⚙️</div>
-                        <h4>Misión de Servicio y Equipos</h4>
-                        <p>Mantenimiento y operación de sistemas críticos del rover en condiciones extremas.</p>
-                    </div>
-                    <div class="mission-card">
-                        <div class="mission-icon">🗺️</div>
-                        <h4>Misión de Navegación Autónoma</h4>
-                        <p>Navegación inteligente y autónoma en terrenos complejos sin intervención humana.</p>
-                    </div>
-                    <div class="mission-card">
-                        <div class="mission-icon">📦</div>
-                        <h4>Misión de Entrega</h4>
-                        <p>Transporte y entrega precisa de equipos y suministros en ubicaciones específicas.</p>
+        <section class="section mission-band">
+            <div class="container band-grid">
+                <div class="mission-patch reveal" aria-label="Insignia de misión MILIMARS">
+                    <div class="patch-ring">
+                        <span>MILIMARS</span>
+                        <strong>ROVER</strong>
+                        <small>URC USA</small>
                     </div>
                 </div>
-            </div>
 
-                    <div class="area-card">
+                <div class="band-copy reveal">
+                    <p class="section-kicker">Misión MILIMARS</p>
+                    <h2>Un rover para operar donde la precisión importa.</h2>
+                    <p>
+                        El equipo prepara una arquitectura robusta para superar misiones de entrega, servicio de equipos, navegación autónoma y ciencia, bajo condiciones de tiempo, comunicación y terreno exigentes.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="areas" class="section technical-areas">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <p class="section-kicker">Sistemas del rover</p>
+                    <h2>Áreas técnicas</h2>
+                </div>
+
+                <div class="area-grid">
+                    <article class="area-card reveal">
                         <div class="area-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
-                                <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" fill="#6C75A3"/>
-                                <circle cx="12" cy="12" r="3" fill="#6C75A3"/>
-                            </svg>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17h16v2H4v-2Zm2-6h12l2 4H4l2-4Zm2.2-6h7.6l1.2 4H7L8.2 5Z"/></svg>
                         </div>
-                        <h4 class="leader-name">Jackson Devia Gomes</h4>
-                        <p class="leader-role">Líder IT</p>
-                        <p class="leader-description">Responsable de la infraestructura tecnológica y sistemas de información del proyecto.</p>
-                    </div>
+                        <h3>Diseño mecánico</h3>
+                        <p>Chasis, suspensión, transmisión, integración CAD y resistencia estructural.</p>
+                    </article>
 
-                    <!-- Segunda copia para loop infinito -->
-                    <div class="area-card">
+                    <article class="area-card reveal">
                         <div class="area-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
-                                <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19Z" fill="#6C75A3"/>
-                                <path d="M12 7C9.24 7 7 9.24 7 12C7 14.76 9.24 17 12 17C14.76 17 17 14.76 17 12C17 9.24 14.76 7 12 7ZM12 15C10.34 15 9 13.66 9 12C9 10.34 10.34 9 12 9C13.66 9 15 10.34 15 12C15 13.66 13.66 15 12 15Z" fill="#6C75A3"/>
-                            </svg>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v12H4V4Zm2 2v8h12V6H6Zm3 12h6v2H9v-2Z"/></svg>
                         </div>
-                        <h3>Diseño Mecánico</h3>
-                        <p>Estructura, suspensión y sistemas de movilidad del rover.</p>
-                    </div>
+                        <h3>Software y control</h3>
+                        <p>Telemetría, navegación autónoma, interfaz de misión y control del rover.</p>
+                    </article>
 
-                    <div class="area-card">
+                    <article class="area-card reveal">
                         <div class="area-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
-                                <rect x="2" y="3" width="20" height="14" rx="2" stroke="#6C75A3" stroke-width="2" fill="none"/>
-                                <rect x="8" y="8" width="8" height="4" fill="#6C75A3"/>
-                                <line x1="2" y1="19" x2="22" y2="19" stroke="#6C75A3" stroke-width="2"/>
-                            </svg>
-                        </div>
-                        <h3>Software y Control</h3>
-                        <p>Sistemas de navegación autónoma y control remoto.</p>
-                    </div>
-
-                    <div class="area-card">
-                        <div class="area-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
-                                <path d="M13 2L3 14h8l-1 8 10-12h-8l1-8z" fill="#FFC857"/>
-                            </svg>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10v4h3v12h-3v4H7v-4H4V6h3V2Zm2 2v16h6V4H9Zm-3 4v8h1V8H6Zm11 0v8h1V8h-1Z"/></svg>
                         </div>
                         <h3>Electrónica</h3>
-                        <p>Circuitos, sensores y sistemas de comunicación.</p>
-                    </div>
+                        <p>Potencia, sensores, PCB, actuadores y arquitectura eléctrica confiable.</p>
+                    </article>
 
-                    <div class="area-card">
+                    <article class="area-card reveal">
                         <div class="area-icon">
-                            <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
-                                <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z" fill="#6C75A3"/>
-                                <circle cx="12" cy="12" r="3" fill="#6C75A3"/>
-                            </svg>
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h2v7h3V8H9V6h6v2h-2v2h5v2h-5v6h2v2H9v-2h2v-6H6V3Z"/></svg>
                         </div>
-                        <h3>Instrumentación</h3>
-                        <p>Equipos científicos y sistemas de análisis.</p>
+                        <h3>Brazo robótico</h3>
+                        <p>Manipulación, cinemática, agarre y ejecución de tareas de precisión.</p>
+                    </article>
+
+                    <article class="area-card reveal">
+                        <div class="area-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 4 6v6c0 5 3.4 8.8 8 10 4.6-1.2 8-5 8-10V6l-8-4Zm0 3.1 5 2.5V12c0 3.5-2 6.1-5 7.2V5.1Z"/></svg>
+                        </div>
+                        <h3>Seguridad y pruebas</h3>
+                        <p>Validación, protocolos, documentación y revisión de riesgos operativos.</p>
+                    </article>
+
+                    <article class="area-card reveal">
+                        <div class="area-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 1 7 7c0 4.7-7 13-7 13S5 13.7 5 9a7 7 0 0 1 7-7Zm0 4a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>
+                        </div>
+                        <h3>Ciencia e instrumentación</h3>
+                        <p>Muestras, sensores ambientales, análisis y protocolos de misión científica.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="lideres" class="section leaders-section">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <p class="section-kicker">Comando de misión</p>
+                    <h2>Líderes del equipo</h2>
+                </div>
+
+                <div class="leaders-carousel" data-leaders-carousel aria-roledescription="carrusel" aria-label="Líderes del Proyecto Rover">
+                    <button class="leaders-control prev" type="button" aria-label="Líder anterior" data-leaders-prev>
+                        <span aria-hidden="true">‹</span>
+                    </button>
+
+                    <div class="leaders-orbit" data-leaders-track>
+                        <article class="leader-mission-card lead-professor active" data-leader-card>
+                            <div class="leader-photo">
+                                <img src="images/IMG_9011.jpg" alt="Foto del profesor líder CEO" loading="lazy">
+                            </div>
+                            <div class="leader-data">
+                                <span class="leader-badge">Profesor líder</span>
+                                <h3>Profesor líder CEO</h3>
+                                <p>Dirección académica, visión estratégica y representación institucional del proyecto.</p>
+                            </div>
+                        </article>
+
+                        <article class="leader-mission-card" data-leader-card>
+                            <div class="leader-photo">
+                                <img src="images/IMG_9016.jpg" alt="Foto del líder del módulo de vida" loading="lazy">
+                            </div>
+                            <div class="leader-data">
+                                <span class="leader-badge">Módulo de vida</span>
+                                <h3>Líder módulo de vida</h3>
+                                <p>Integración del sistema de soporte, documentación y operación del módulo análogo.</p>
+                            </div>
+                        </article>
+
+                        <article class="leader-mission-card" data-leader-card>
+                            <div class="leader-photo">
+                                <img src="images/IMG_9027.jpg" alt="Foto del líder TI" loading="lazy">
+                            </div>
+                            <div class="leader-data">
+                                <span class="leader-badge">Tecnología</span>
+                                <h3>Líder TI</h3>
+                                <p>Software, telemetría, interfaz de misión, comunicaciones y control del rover.</p>
+                            </div>
+                        </article>
+
+                        <article class="leader-mission-card" data-leader-card>
+                            <div class="leader-photo">
+                                <img src="images/IMG_9030.jpg" alt="Foto del líder del brazo mecánico" loading="lazy">
+                            </div>
+                            <div class="leader-data">
+                                <span class="leader-badge">Manipulación</span>
+                                <h3>Líder brazo mecánico</h3>
+                                <p>Diseño, control y validación del brazo para tareas de precisión en competencia.</p>
+                            </div>
+                        </article>
+
+                        <article class="leader-mission-card" data-leader-card>
+                            <div class="leader-photo">
+                                <img src="images/IMG_9034.jpg" alt="Foto del líder de movilidad" loading="lazy">
+                            </div>
+                            <div class="leader-data">
+                                <span class="leader-badge">Locomoción</span>
+                                <h3>Líder movilidad</h3>
+                                <p>Chasis, suspensión, tracción y desempeño del rover sobre terreno análogo marciano.</p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <button class="leaders-control next" type="button" aria-label="Siguiente líder" data-leaders-next>
+                        <span aria-hidden="true">›</span>
+                    </button>
+
+                    <div class="leaders-dots" aria-label="Seleccionar líder">
+                        <button class="active" type="button" aria-label="Ver profesor líder CEO" data-leaders-dot></button>
+                        <button type="button" aria-label="Ver líder módulo de vida" data-leaders-dot></button>
+                        <button type="button" aria-label="Ver líder TI" data-leaders-dot></button>
+                        <button type="button" aria-label="Ver líder brazo mecánico" data-leaders-dot></button>
+                        <button type="button" aria-label="Ver líder movilidad" data-leaders-dot></button>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <section class="quinta">
-        <div class="container flex_row">
-            <div class="flex_colum">
-                <div class="Quin_Cont_Tex">
-                    <h2 class="Quin_Tittle">Lideres de area</h2>
-                    <p class="Quin_Text">El desarrollo del ROVER es el resultado del trabajo colaborativo de un equipo multidisciplinario comprometido con la innovación, la ingeniería y la exploración tecnológica. La coordinación y el éxito del proyecto recaen en cinco líderes, cada uno responsable de un área estratégica fundamental para el funcionamiento integral del sistema.
-                        
-                        Cada líder aporta conocimientos técnicos, visión estratégica y capacidad de gestión, garantizando que todas las áreas trabajen de manera sincronizada y eficiente. Desde la dirección general hasta los sistemas de soporte vital, el equipo de liderazgo asegura que el ROVER cumpla con los objetivos académicos, tecnológicos y operativos planteados por el proyecto.
-                        
-                        Las áreas de liderazgo que conforman el núcleo del proyecto son: Dirección General (CEO), Tecnologías de la Información (TI), Electrónica, Brazo Robótico y Módulo de Vida, pilares esenciales para el diseño, control, autonomía y sostenibilidad del ROVER.</p>
+        </section>
+
+        <section id="progreso" class="section progress-section">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <p class="section-kicker">Bitácora visual</p>
+                    <h2>Progreso del proyecto</h2>
+                </div>
+
+                <div class="progress-grid">
+                    <figure class="progress-card large reveal">
+                        <img src="images/IMG_9072.jpg" alt="Equipo trabajando en el desarrollo del rover">
+                        <figcaption>
+                            <span>Fase 01</span>
+                            <strong>Integración del equipo</strong>
+                        </figcaption>
+                    </figure>
+                    <figure class="progress-card reveal">
+                        <img src="images/IMG_9067.jpg" alt="Prototipo y componentes del proyecto rover">
+                        <figcaption>
+                            <span>Fase 02</span>
+                            <strong>Prototipado</strong>
+                        </figcaption>
+                    </figure>
+                    <figure class="progress-card reveal">
+                        <img src="images/IMG_9044.jpg" alt="Pruebas de avance del proyecto rover">
+                        <figcaption>
+                            <span>Fase 03</span>
+                            <strong>Validación</strong>
+                        </figcaption>
+                    </figure>
+                    <div class="progress-slot reveal">
+                        <span>Próximo hito</span>
+                        <strong>Pruebas de campo</strong>
                     </div>
-                    <div class="Quin_Cards">
-                        <div class="leaders-track">
-                            <!-- Tarjeta CEO - Destacada -->
-                            <div class="leader-slide ceo-slide">
-                                <div class="leader-card-content">
-                                    <div class="leader-photo-circle">
-                                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
-                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#FFC857"/>
-                                        </svg>
-                                    </div>
-                                    <h3>Juan Camilo Hernández</h3>
-                                    <p class="leader-role">CEO</p>
-                                    <div class="leader-stars">★★★★★</div>
-                                    <p class="leader-bio">Dirección general del proyecto, coordinación estratégica y gestión de recursos para garantizar el éxito integral del ROVER.</p>
-                                </div>
-                            </div>
-
-                            <!-- Tarjeta Líder IT -->
-                            <div class="leader-slide">
-                                <div class="leader-card-content">
-                                    <div class="leader-photo-circle">
-                                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
-                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#6C75A3"/>
-                                        </svg>
-                                    </div>
-                                    <h3>Jackson Devia Gomez</h3>
-                                    <p class="leader-role">Líder IT</p>
-                                    <div class="leader-stars">★★★★★</div>
-                                    <p class="leader-bio">Sistemas de información, software de control y comunicaciones del ROVER.</p>
-                                </div>
-                            </div>
-
-                            <!-- Tarjeta Líder Electrónica -->
-                            <div class="leader-slide">
-                                <div class="leader-card-content">
-                                    <div class="leader-photo-circle">
-                                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
-                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#6C75A3"/>
-                                        </svg>
-                                    </div>
-                                    <h3>Sebastián Castañeda</h3>
-                                    <p class="leader-role">Líder Electrónica</p>
-                                    <div class="leader-stars">★★★★★</div>
-                                    <p class="leader-bio">Circuitos, sensores y sistemas electrónicos del ROVER.</p>
-                                </div>
-                            </div>
-
-                            <!-- Tarjeta Líder Brazo Robótico -->
-                            <div class="leader-slide">
-                                <div class="leader-card-content">
-                                    <div class="leader-photo-circle">
-                                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
-                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#6C75A3"/>
-                                        </svg>
-                                    </div>
-                                    <h3>Santiago Herrera Guevara</h3>
-                                    <p class="leader-role">Líder Brazo Robótico</p>
-                                    <div class="leader-stars">★★★★★</div>
-                                    <p class="leader-bio">Diseño y control del brazo robótico para manipulación avanzada.</p>
-                                </div>
-                            </div>
-
-                            <!-- Tarjeta Líder Módulo de Vida -->
-                            <div class="leader-slide">
-                                <div class="leader-card-content">
-                                    <div class="leader-photo-circle">
-                                        <svg width="80" height="80" viewBox="0 0 24 24" fill="none">
-                                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#6C75A3"/>
-                                        </svg>
-                                    </div>
-                                    <h3>Jairo Esteban Moreno</h3>
-                                    <p class="leader-role">Líder Módulo de Vida y PM</p>
-                                    <div class="leader-stars">★★★★★</div>
-                                    <p class="leader-bio">Sistemas de soporte vital y gestión de proyectos del ROVER.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Indicadores -->
-                        <div class="leaders-indicators">
-                            <span class="leader-indicator active" data-leader="0"></span>
-                            <span class="leader-indicator" data-leader="1"></span>
-                            <span class="leader-indicator" data-leader="2"></span>
-                            <span class="leader-indicator" data-leader="3"></span>
-                            <span class="leader-indicator" data-leader="4"></span>
-                        </div>
-                    </div>
+                </div>
             </div>
-            <div class="Quin_Image"></div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
+        <section class="section timeline-section">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <p class="section-kicker">Ruta de misión</p>
+                    <h2>Cronograma técnico</h2>
+                </div>
+
+                <div class="timeline">
+                    <article class="timeline-item route-design reveal">
+                        <span class="route-code">Fase 01</span>
+                        <div class="route-visual" aria-hidden="true"></div>
+                        <h3>Diseño preliminar</h3>
+                        <p>Arquitectura del rover, requisitos de competencia y planeación de subsistemas.</p>
+                    </article>
+                    <article class="timeline-item route-build reveal">
+                        <span class="route-code">Fase 02</span>
+                        <div class="route-visual" aria-hidden="true"></div>
+                        <h3>Fabricación</h3>
+                        <p>Construcción de chasis, brazo, electrónica, software base e integración mecánica.</p>
+                    </article>
+                    <article class="timeline-item route-test reveal">
+                        <span class="route-code">Fase 03</span>
+                        <div class="route-visual" aria-hidden="true"></div>
+                        <h3>Pruebas</h3>
+                        <p>Validación de locomoción, comunicación, consumo, navegación y seguridad.</p>
+                    </article>
+                    <article class="timeline-item route-launch reveal">
+                        <span class="route-code">Fase 04</span>
+                        <div class="route-visual" aria-hidden="true"></div>
+                        <h3>Competencia</h3>
+                        <p>Presentación del rover ante jurados y ejecución de misiones en Estados Unidos.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="patrocinio" class="section sponsor-section">
+            <div class="container sponsor-grid">
+                <div class="section-copy reveal">
+                    <p class="section-kicker">Patrocinio y aliados</p>
+                    <h2>Impulsa una misión universitaria con alcance internacional.</h2>
+                    <p>
+                        El proyecto abre espacios para aliados académicos, tecnológicos e industriales interesados en visibilidad, innovación aplicada y formación de talento en robótica espacial.
+                    </p>
+                </div>
+
+                <div class="sponsor-panel reveal">
+                    <h3>Necesidades clave</h3>
+                    <ul>
+                        <li>Materiales y manufactura</li>
+                        <li>Componentes electrónicos</li>
+                        <li>Sensores, comunicación y energía</li>
+                        <li>Logística para competencia</li>
+                    </ul>
+                    <a class="btn btn-primary" href="mailto:contacto@milimars.com">Contactar equipo</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-logo">
-                        <img src="images/logo.png" alt="MILIMARS Logo" class="footer-logo-img">
-                        <h3>MILIMARS</h3>
-                    </div>
-                    <p class="footer-description">Proyecto universitario de robótica espacial dedicado a la construcción de un rover exploratorio de alto rendimiento para el University Rover Challenge (URC).</p>
-                    <div class="footer-social">
-                        <a href="#" class="social-icon" aria-label="Facebook">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="Twitter">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="Instagram">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-icon" aria-label="LinkedIn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                            </svg>
-                        </a>
-                    </div>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <img src="images/logo.png" alt="MILIMARS Logo" class="footer-logo-img">
+                    <h3>MILIMARS</h3>
                 </div>
-
-                <div class="footer-section">
-                    <h4>Enlaces Rápidos</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Proyecto</a></li>
-                        <li><a href="rover.html">Rover</a></li>
-                        <li><a href="competencia.html">Competencia</a></li>
-                        <li><a href="#equipo">Equipo</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Áreas</h4>
-                    <ul class="footer-links">
-                        <li><a href="#mecanica">Diseño Mecánico</a></li>
-                        <li><a href="#software">Software y Control</a></li>
-                        <li><a href="#electronica">Electrónica</a></li>
-                        <li><a href="#instrumentacion">Instrumentación</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-section">
-                    <h4>Contacto</h4>
-                    <ul class="footer-contact">
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                <circle cx="12" cy="10" r="3"/>
-                            </svg>
-                            Universidad, Colombia
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                <polyline points="22,6 12,13 2,6"/>
-                            </svg>
-                            contacto@milimars.com
-                        </li>
-                        <li>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                            </svg>
-                            +57 (123) 456-7890
-                        </li>
-                    </ul>
-                </div>
+                <p class="footer-description">Proyecto universitario de robótica espacial para el University Rover Challenge.</p>
             </div>
 
-            <div class="footer-bottom">
-                <p>&copy; 2025 MILIMARS - Proyecto Rover Universitario. Todos los derechos reservados.</p>
-                <div class="footer-bottom-links">
-                    <a href="#privacidad">Política de Privacidad</a>
-                    <span>|</span>
-                    <a href="#terminos">Términos de Uso</a>
-                </div>
+            <div class="footer-section">
+                <h4>Navegación</h4>
+                <ul class="footer-links">
+                    <li><a href="#proyecto">Proyecto</a></li>
+                    <li><a href="#rover">Rover 3D</a></li>
+                    <li><a href="#areas">Áreas</a></li>
+                    <li><a href="#lideres">Equipo</a></li>
+                    <li><a href="competencia.html">Competencia</a></li>
+                </ul>
             </div>
+
+            <div class="footer-section">
+                <h4>Contacto</h4>
+                <ul class="footer-contact">
+                    <li>Universidad Militar Nueva Granada</li>
+                    <li><a href="mailto:contacto@milimars.com">contacto@milimars.com</a></li>
+                    <li>Colombia</li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 MILIMARS. Proyecto Rover Universitario.</p>
         </div>
     </footer>
+
+    <script src="js/principal.js"></script>
 </body>
-<script src="js/principal.js"></script>
 </html>
