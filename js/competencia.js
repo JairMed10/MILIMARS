@@ -1,167 +1,161 @@
 // ========================================
-// CARRUSEL DE OBJETIVOS URC
+// URC INTRO — SCROLL REVEAL + STAT COUNTER
 // ========================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Elementos del carrusel
-    const track = document.querySelector('.carousel-track');
-    const slides = Array.from(document.querySelectorAll('.carousel-slide'));
-    const prevBtn = document.querySelector('.carousel-btn-prev');
-    const nextBtn = document.querySelector('.carousel-btn-next');
-    const indicators = Array.from(document.querySelectorAll('.indicator'));
-    const wrapper = document.querySelector('.carousel-wrapper');
+    // Scroll reveal con IntersectionObserver
+    var revealEls = document.querySelectorAll('.intro-reveal');
 
-    // Verificar que existan los elementos
-    if (!track || slides.length === 0 || !wrapper) return;
-
-    let currentSlide = 0;
-    const totalSlides = slides.length;
-
-    // Función para obtener el ancho del slide
-    function getSlideWidth() {
-        return wrapper.offsetWidth;
-    }
-
-    // Función para actualizar el carrusel
-    function updateCarousel(index) {
-        // Remover clase active de todos los indicadores
-        indicators.forEach(indicator => indicator.classList.remove('active'));
-
-        // Añadir clase active al indicador actual
-        if (indicators[index]) {
-            indicators[index].classList.add('active');
-        }
-
-        // Mover el track con el ancho actualizado
-        const slideWidth = getSlideWidth();
-        track.style.transform = `translateX(-${index * slideWidth}px)`;
-
-        currentSlide = index;
-    }
-
-    // Función para ir al siguiente slide
-    function nextSlide() {
-        const next = (currentSlide + 1) % totalSlides;
-        updateCarousel(next);
-    }
-
-    // Función para ir al slide anterior
-    function prevSlide() {
-        const prev = (currentSlide - 1 + totalSlides) % totalSlides;
-        updateCarousel(prev);
-    }
-
-    // Auto-play del carrusel
-    let autoplayInterval = null;
-
-    function startAutoplay() {
-        // Limpiar cualquier intervalo existente antes de crear uno nuevo
-        if (autoplayInterval) {
-            clearInterval(autoplayInterval);
-        }
-        autoplayInterval = setInterval(nextSlide, 5000); // Cambia cada 5 segundos
-    }
-
-    function stopAutoplay() {
-        if (autoplayInterval) {
-            clearInterval(autoplayInterval);
-            autoplayInterval = null;
+    if (revealEls.length > 0) {
+        if ('IntersectionObserver' in window) {
+            var revealObserver = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        revealObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12 });
+            revealEls.forEach(function(el) { revealObserver.observe(el); });
+        } else {
+            revealEls.forEach(function(el) { el.classList.add('is-visible'); });
         }
     }
 
-    // Event listeners para los botones
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            stopAutoplay();
-            nextSlide();
-            startAutoplay();
-        });
-    }
+    // Contador animado para las estadísticas
+    var statNumbers = document.querySelectorAll('.stat-number');
+    var countersStarted = false;
 
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            stopAutoplay();
-            prevSlide();
-            startAutoplay();
-        });
-    }
-
-    // Event listeners para los indicadores
-    indicators.forEach((indicator, index) => {
-        indicator.addEventListener('click', () => {
-            stopAutoplay();
-            updateCarousel(index);
-            startAutoplay();
-        });
-    });
-
-    // Inicializar el carrusel en la posición 0
-    updateCarousel(0);
-
-    // Iniciar autoplay
-    startAutoplay();
-
-    // Pausar autoplay cuando el mouse está sobre el carrusel
-    const carouselContainer = document.querySelector('.carousel-container');
-    if (carouselContainer) {
-        carouselContainer.addEventListener('mouseenter', () => {
-            stopAutoplay();
-        });
-        carouselContainer.addEventListener('mouseleave', () => {
-            stopAutoplay();
-            startAutoplay();
-        });
-    }
-
-    // Soporte para navegación con teclado
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-            stopAutoplay();
-            prevSlide();
-            startAutoplay();
-        } else if (e.key === 'ArrowRight') {
-            stopAutoplay();
-            nextSlide();
-            startAutoplay();
-        }
-    });
-
-    // Soporte para gestos táctiles (swipe)
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    if (carouselContainer) {
-        carouselContainer.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        carouselContainer.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-    }
-
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const difference = touchStartX - touchEndX;
-
-        if (Math.abs(difference) > swipeThreshold) {
-            stopAutoplay();
-            if (difference > 0) {
-                // Swipe left - siguiente
-                nextSlide();
-            } else {
-                // Swipe right - anterior
-                prevSlide();
+    function runCounters() {
+        if (countersStarted) return;
+        countersStarted = true;
+        statNumbers.forEach(function(el) {
+            var target = parseInt(el.getAttribute('data-target'), 10);
+            var duration = 1500;
+            var startTime = null;
+            function step(ts) {
+                if (!startTime) startTime = ts;
+                var progress = Math.min((ts - startTime) / duration, 1);
+                var eased = 1 - Math.pow(1 - progress, 3); // ease out cubic
+                el.textContent = Math.floor(eased * target);
+                if (progress < 1) { requestAnimationFrame(step); }
+                else { el.textContent = target; }
             }
-            startAutoplay();
+            requestAnimationFrame(step);
+        });
+    }
+
+    var statsRow = document.querySelector('.intro-stats');
+    if (statsRow) {
+        if ('IntersectionObserver' in window) {
+            var statsObs = new IntersectionObserver(function(entries) {
+                if (entries[0].isIntersecting) { runCounters(); statsObs.disconnect(); }
+            }, { threshold: 0.3 });
+            statsObs.observe(statsRow);
+        } else {
+            runCounters();
+        }
+    }
+});
+
+// ========================================
+// OBJETIVOS URC — TABS CON AUTO-AVANCE
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    var objTabs   = Array.from(document.querySelectorAll('.obj-tab'));
+    var objPanels = Array.from(document.querySelectorAll('.obj-panel-content'));
+
+    if (!objTabs.length || !objPanels.length) return;
+
+    var objCurrent     = 0;
+    var objAutoTimer   = null;
+    var OBJ_DURATION   = 5000;
+
+    // Scroll reveal para .obj-reveal
+    var objRevEls = document.querySelectorAll('.obj-reveal');
+    if (objRevEls.length > 0) {
+        if ('IntersectionObserver' in window) {
+            var objRevObs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) {
+                        e.target.classList.add('is-visible');
+                        objRevObs.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            objRevEls.forEach(function(el) { objRevObs.observe(el); });
+        } else {
+            objRevEls.forEach(function(el) { el.classList.add('is-visible'); });
         }
     }
 
-    // Ajustar el carrusel en resize
-    window.addEventListener('resize', () => {
-        updateCarousel(currentSlide);
+    function objGo(newIdx) {
+        if (newIdx === objCurrent) return;
+        var prev = objCurrent;
+
+        // Salida del panel anterior
+        objPanels[prev].classList.add('leaving');
+        objPanels[prev].classList.remove('active');
+        setTimeout(function() { objPanels[prev].classList.remove('leaving'); }, 250);
+
+        objTabs[prev].classList.remove('active');
+
+        // Activar nuevo
+        objCurrent = newIdx;
+        objPanels[newIdx].classList.add('active');
+        objTabs[newIdx].classList.add('active');
+
+        // Reiniciar barra de progreso
+        var pg = objTabs[newIdx].querySelector('.tab-progress');
+        if (pg) { pg.style.animation = 'none'; void pg.offsetWidth; pg.style.animation = ''; }
+    }
+
+    function objNext() { objGo((objCurrent + 1) % objTabs.length); }
+
+    function objStartAuto() {
+        objStopAuto();
+        objAutoTimer = setInterval(objNext, OBJ_DURATION);
+    }
+    function objStopAuto() {
+        if (objAutoTimer) { clearInterval(objAutoTimer); objAutoTimer = null; }
+    }
+
+    // Clicks en tabs
+    objTabs.forEach(function(tab) {
+        tab.addEventListener('click', function() {
+            objStopAuto();
+            objGo(parseInt(tab.getAttribute('data-index'), 10));
+            objStartAuto();
+        });
     });
+
+    // Pausar en hover del layout
+    var objLayout = document.querySelector('.obj-layout');
+    if (objLayout) {
+        objLayout.addEventListener('mouseenter', objStopAuto);
+        objLayout.addEventListener('mouseleave', objStartAuto);
+    }
+
+    // Swipe táctil en el panel
+    var objPanel = document.querySelector('.obj-panel');
+    var objTouchX = 0;
+    if (objPanel) {
+        objPanel.addEventListener('touchstart', function(e) { objTouchX = e.changedTouches[0].screenX; });
+        objPanel.addEventListener('touchend', function(e) {
+            var diff = objTouchX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) {
+                objStopAuto();
+                objGo(diff > 0 ? (objCurrent + 1) % objTabs.length : (objCurrent - 1 + objTabs.length) % objTabs.length);
+                objStartAuto();
+            }
+        });
+    }
+
+    // Arrancar progreso inicial y auto-avance
+    var initPg = objTabs[0] && objTabs[0].querySelector('.tab-progress');
+    if (initPg) { initPg.style.animation = 'none'; void initPg.offsetWidth; initPg.style.animation = ''; }
+    objStartAuto();
 });
 
 // ========================================
@@ -169,7 +163,6 @@ document.addEventListener('DOMContentLoaded', function() {
 // ========================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Elementos del V-carousel
     const vTrack = document.querySelector('.v-carousel-track');
     const vCards = Array.from(document.querySelectorAll('.v-card'));
     const vPrevBtn = document.querySelector('.v-carousel-prev');
@@ -177,57 +170,32 @@ document.addEventListener('DOMContentLoaded', function() {
     const vDots = Array.from(document.querySelectorAll('.v-dot'));
     const vWrapper = document.querySelector('.v-carousel-wrapper');
 
-    // Verificar que existan los elementos
     if (!vTrack || vCards.length === 0 || !vWrapper) return;
 
     let vCurrentSlide = 0;
     const vTotalSlides = vCards.length;
-    const anglePerSlide = 360 / vTotalSlides; // 72 grados para 5 tarjetas
-    const radius = 500; // Radio del semicírculo
+    const anglePerSlide = 360 / vTotalSlides;
+    const radius = 500;
 
-    // Función para actualizar el V-carousel
     function updateVCarousel(index) {
-        // Remover clase active de todos los dots
         vDots.forEach(dot => dot.classList.remove('active'));
+        if (vDots[index]) vDots[index].classList.add('active');
 
-        // Añadir clase active al dot actual
-        if (vDots[index]) {
-            vDots[index].classList.add('active');
-        }
-
-        // Actualizar cada tarjeta
         vCards.forEach((card, i) => {
-            // Calcular posición relativa a la tarjeta activa
             let offset = (i - index + vTotalSlides) % vTotalSlides;
+            if (offset > vTotalSlides / 2) offset -= vTotalSlides;
 
-            // Ajustar para tener valores centrados (-2, -1, 0, 1, 2 para 5 tarjetas)
-            if (offset > vTotalSlides / 2) {
-                offset -= vTotalSlides;
-            }
-
-            // Calcular ángulo en el semicírculo (solo frente: -90° a 90°)
             const angle = (offset * anglePerSlide) * (Math.PI / 180);
-
-            // Posición X e Y para formar V (semicírculo frontal)
             const x = Math.sin(angle) * radius;
-            const z = (Math.cos(angle) - 1) * radius; // -1 para empujar hacia atrás
+            const z = (Math.cos(angle) - 1) * radius;
+            const normalizedPos = Math.abs(offset / 2);
+            const y = normalizedPos * 80;
 
-            // Calcular Y para formar V (triangulo): centro abajo, extremos arriba
-            const normalizedPos = Math.abs(offset / 2); // 0 al centro, 1 en extremos
-            const y = normalizedPos * 80; // Elevación de los extremos
-
-            // Opacidad: solo visible al frente (offset -2 a 2)
             let opacity = 1;
-            if (Math.abs(offset) > 2) {
-                opacity = 0; // Ocultar las que están atrás
-            } else if (Math.abs(offset) === 2) {
-                opacity = 0.5; // Semi-transparente en los extremos
-            }
+            if (Math.abs(offset) > 2) opacity = 0;
+            else if (Math.abs(offset) === 2) opacity = 0.5;
 
-            // Z-index: centro al frente
             const zIndex = 10 - Math.abs(offset);
-
-            // Aplicar transformación (tarjetas siempre mirando al frente)
             card.style.transform = `translateX(${x}px) translateY(${y}px) translateZ(${z}px)`;
             card.style.opacity = opacity;
             card.style.zIndex = zIndex;
@@ -236,145 +204,63 @@ document.addEventListener('DOMContentLoaded', function() {
         vCurrentSlide = index;
     }
 
-    // Función para ir al siguiente slide
-    function vNextSlide() {
-        const next = (vCurrentSlide + 1) % vTotalSlides;
-        updateVCarousel(next);
-    }
+    function vNextSlide() { updateVCarousel((vCurrentSlide + 1) % vTotalSlides); }
+    function vPrevSlide() { updateVCarousel((vCurrentSlide - 1 + vTotalSlides) % vTotalSlides); }
 
-    // Función para ir al slide anterior
-    function vPrevSlide() {
-        const prev = (vCurrentSlide - 1 + vTotalSlides) % vTotalSlides;
-        updateVCarousel(prev);
-    }
-
-    // Auto-play del V-carousel
     let vAutoplayInterval = null;
-
     function startVAutoplay() {
-        if (vAutoplayInterval) {
-            clearInterval(vAutoplayInterval);
-        }
-        vAutoplayInterval = setInterval(vNextSlide, 4000); // Cambia cada 4 segundos
+        if (vAutoplayInterval) clearInterval(vAutoplayInterval);
+        vAutoplayInterval = setInterval(vNextSlide, 4000);
     }
-
     function stopVAutoplay() {
-        if (vAutoplayInterval) {
-            clearInterval(vAutoplayInterval);
-            vAutoplayInterval = null;
-        }
+        if (vAutoplayInterval) { clearInterval(vAutoplayInterval); vAutoplayInterval = null; }
     }
 
-    // Event listeners para los botones
-    if (vNextBtn) {
-        vNextBtn.addEventListener('click', () => {
-            stopVAutoplay();
-            vNextSlide();
-            startVAutoplay();
-        });
-    }
+    if (vNextBtn) vNextBtn.addEventListener('click', () => { stopVAutoplay(); vNextSlide(); startVAutoplay(); });
+    if (vPrevBtn) vPrevBtn.addEventListener('click', () => { stopVAutoplay(); vPrevSlide(); startVAutoplay(); });
 
-    if (vPrevBtn) {
-        vPrevBtn.addEventListener('click', () => {
-            stopVAutoplay();
-            vPrevSlide();
-            startVAutoplay();
-        });
-    }
-
-    // Event listeners para los dots
     vDots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            stopVAutoplay();
-            updateVCarousel(index);
-            startVAutoplay();
-        });
+        dot.addEventListener('click', () => { stopVAutoplay(); updateVCarousel(index); startVAutoplay(); });
     });
 
-    // Inicializar el V-carousel en la posición 0
     updateVCarousel(0);
-
-    // Iniciar autoplay
     startVAutoplay();
 
-    // Pausar autoplay cuando el mouse está sobre el V-carousel
     const vCarouselContainer = document.querySelector('.v-carousel-container');
     if (vCarouselContainer) {
-        vCarouselContainer.addEventListener('mouseenter', () => {
-            stopVAutoplay();
-        });
-        vCarouselContainer.addEventListener('mouseleave', () => {
-            stopVAutoplay();
-            startVAutoplay();
-        });
+        vCarouselContainer.addEventListener('mouseenter', stopVAutoplay);
+        vCarouselContainer.addEventListener('mouseleave', () => { stopVAutoplay(); startVAutoplay(); });
     }
 
-    // Soporte para navegación con teclado (solo si el V-carousel está en viewport)
     document.addEventListener('keydown', (e) => {
         const rect = vCarouselContainer.getBoundingClientRect();
         const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
-
         if (inViewport) {
-            if (e.key === 'ArrowLeft') {
-                stopVAutoplay();
-                vPrevSlide();
-                startVAutoplay();
-            } else if (e.key === 'ArrowRight') {
-                stopVAutoplay();
-                vNextSlide();
-                startVAutoplay();
-            }
+            if (e.key === 'ArrowLeft')  { stopVAutoplay(); vPrevSlide(); startVAutoplay(); }
+            if (e.key === 'ArrowRight') { stopVAutoplay(); vNextSlide(); startVAutoplay(); }
         }
     });
 
-    // Soporte para gestos táctiles (swipe)
     let vTouchStartX = 0;
-    let vTouchEndX = 0;
-
     if (vCarouselContainer) {
-        vCarouselContainer.addEventListener('touchstart', (e) => {
-            vTouchStartX = e.changedTouches[0].screenX;
-        });
-
+        vCarouselContainer.addEventListener('touchstart', (e) => { vTouchStartX = e.changedTouches[0].screenX; });
         vCarouselContainer.addEventListener('touchend', (e) => {
-            vTouchEndX = e.changedTouches[0].screenX;
-            handleVSwipe();
+            const diff = vTouchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) {
+                stopVAutoplay();
+                if (diff > 0) vNextSlide(); else vPrevSlide();
+                startVAutoplay();
+            }
         });
     }
 
-    function handleVSwipe() {
-        const swipeThreshold = 50;
-        const difference = vTouchStartX - vTouchEndX;
+    window.addEventListener('resize', () => updateVCarousel(vCurrentSlide));
 
-        if (Math.abs(difference) > swipeThreshold) {
-            stopVAutoplay();
-            if (difference > 0) {
-                // Swipe left - siguiente
-                vNextSlide();
-            } else {
-                // Swipe right - anterior
-                vPrevSlide();
-            }
-            startVAutoplay();
-        }
-    }
-
-    // Ajustar el V-carousel en resize
-    window.addEventListener('resize', () => {
-        updateVCarousel(vCurrentSlide);
-    });
-
-    // Funcionalidad de botones de favoritos
-    const vFavoriteButtons = document.querySelectorAll('.v-favorite-btn');
-
-    vFavoriteButtons.forEach(button => {
+    document.querySelectorAll('.v-favorite-btn').forEach(button => {
         button.addEventListener('click', function(e) {
             e.stopPropagation();
-
             const svg = this.querySelector('svg');
-            const currentFill = svg.getAttribute('fill');
-
-            if (currentFill === 'currentColor') {
+            if (svg.getAttribute('fill') === 'currentColor') {
                 svg.setAttribute('fill', 'none');
                 this.style.background = 'rgba(255, 255, 255, 0.95)';
             } else {
@@ -383,6 +269,52 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+});
+
+// ========================================
+// FECHAS IMPORTANTES — TIMELINE
+// ========================================
+
+document.addEventListener('DOMContentLoaded', function () {
+    const track   = document.querySelector('.tl-track');
+    const tlItems = document.querySelectorAll('.tl-item.tl-reveal');
+    const tlHead  = document.querySelector('.tl-header.tl-reveal');
+
+    if (!track) return;
+
+    // Spine fill animates when track enters viewport
+    const spineObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                track.classList.add('spine-active');
+                spineObs.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.08 });
+    spineObs.observe(track);
+
+    // Header reveal
+    if (tlHead) {
+        const headObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('is-visible'); headObs.unobserve(e.target); }
+            });
+        }, { threshold: 0.3 });
+        headObs.observe(tlHead);
+    }
+
+    // Items reveal — stagger within each observer batch
+    if (tlItems.length) {
+        const itemObs = new IntersectionObserver(entries => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => entry.target.classList.add('is-visible'), i * 65);
+                    itemObs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+        tlItems.forEach(el => itemObs.observe(el));
+    }
 });
 
 // ========================================
@@ -405,147 +337,128 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Función para agregar cero a la izquierda
-    function padZero(num, size = 2) {
-        let s = num + "";
+    function padZero(num, size) {
+        size = size || 2;
+        var s = num + "";
         while (s.length < size) s = "0" + s;
         return s;
     }
 
+    // Flip animation: valor actual sale hacia arriba, nuevo entra desde abajo
+    function animateValue(element, newValue) {
+        if (element.textContent === newValue) return;
+        element.classList.remove('flip-in', 'flip-out');
+        void element.offsetWidth; // forzar reflow para reiniciar la animación
+        element.classList.add('flip-out');
+        setTimeout(function() {
+            element.textContent = newValue;
+            element.classList.remove('flip-out');
+            element.classList.add('flip-in');
+            setTimeout(function() {
+                element.classList.remove('flip-in');
+            }, 300);
+        }, 190);
+    }
+
     // Función para actualizar el contador
     function updateCountdown() {
-        const now = new Date().getTime();
-        const distance = targetDate - now;
+        var now = new Date().getTime();
+        var distance = targetDate - now;
 
         // Si la fecha ya pasó
         if (distance < 0) {
-            daysElement.textContent = '000';
-            hoursElement.textContent = '00';
-            minutesElement.textContent = '00';
-            secondsElement.textContent = '00';
+            animateValue(daysElement, '000');
+            animateValue(hoursElement, '00');
+            animateValue(minutesElement, '00');
+            animateValue(secondsElement, '00');
             return;
         }
 
         // Cálculos de tiempo
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        var days    = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours   = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Actualizar el DOM con animación
-        daysElement.textContent = padZero(days, 3);
-        hoursElement.textContent = padZero(hours);
-        minutesElement.textContent = padZero(minutes);
-        secondsElement.textContent = padZero(seconds);
+        animateValue(daysElement,    padZero(days, 3));
+        animateValue(hoursElement,   padZero(hours));
+        animateValue(minutesElement, padZero(minutes));
+        animateValue(secondsElement, padZero(seconds));
     }
 
-    // Actualizar inmediatamente
-    updateCountdown();
+    // Primer render sin animación (valores instantáneos)
+    var now0 = new Date().getTime();
+    var d0   = targetDate - now0;
+    if (d0 > 0) {
+        daysElement.textContent    = padZero(Math.floor(d0 / (1000 * 60 * 60 * 24)), 3);
+        hoursElement.textContent   = padZero(Math.floor((d0 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)));
+        minutesElement.textContent = padZero(Math.floor((d0 % (1000 * 60 * 60)) / (1000 * 60)));
+        secondsElement.textContent = padZero(Math.floor((d0 % (1000 * 60)) / 1000));
+    }
 
-    // Actualizar cada segundo
-    const countdownInterval = setInterval(updateCountdown, 1000);
+    // Actualizar cada segundo con flip animation
+    setInterval(updateCountdown, 1000);
 });
 
 // ========================================
 // CARRUSEL DE MISIONES
 // ========================================
 document.addEventListener('DOMContentLoaded', function () {
-    const missionsTrack = document.querySelector('.missions-carousel-track');
-    const missionsSlides = document.querySelectorAll('.missions-slide');
-    const missionsPrevBtn = document.querySelector('.missions-carousel-prev');
-    const missionsNextBtn = document.querySelector('.missions-carousel-next');
-    const missionsDots = document.querySelectorAll('.missions-dot');
+    const msTrack = document.getElementById('msTrack');
+    if (!msTrack) return;
 
-    if (!missionsTrack || missionsSlides.length === 0) return;
+    const msDots = document.querySelectorAll('.ms-dot');
+    const msProgBar = document.getElementById('msProgBar');
+    const msPrev = document.querySelector('.ms-prev');
+    const msNext = document.querySelector('.ms-next');
+    const msTotal = 5;
 
-    let missionsCurrentIndex = 0;
-    const missionsTotalSlides = missionsSlides.length;
-    let missionsAutoplayInterval;
+    let msCurrent = 0;
+    let msTimer;
 
-    // Función para actualizar el carrusel
-    function updateMissionsCarousel(index) {
-        const translateX = -index * 100;
-        missionsTrack.style.transform = `translateX(${translateX}%)`;
-
-        // Actualizar dots
-        missionsDots.forEach((dot, i) => {
-            if (i === index) {
-                dot.classList.add('active');
-            } else {
-                dot.classList.remove('active');
-            }
-        });
+    function msGo(idx) {
+        msCurrent = ((idx % msTotal) + msTotal) % msTotal;
+        msTrack.style.transform = `translateX(${msCurrent * -100}%)`;
+        msDots.forEach((d, i) => d.classList.toggle('ms-dot-active', i === msCurrent));
+        if (msProgBar) msProgBar.style.width = `${((msCurrent + 1) / msTotal) * 100}%`;
     }
 
-    // Navegación - Siguiente
-    function nextMissionsSlide() {
-        missionsCurrentIndex = (missionsCurrentIndex + 1) % missionsTotalSlides;
-        updateMissionsCarousel(missionsCurrentIndex);
-    }
+    function msAutoStart() { msTimer = setInterval(() => msGo(msCurrent + 1), 7000); }
+    function msAutoStop()  { clearInterval(msTimer); }
 
-    // Navegación - Anterior
-    function prevMissionsSlide() {
-        missionsCurrentIndex = (missionsCurrentIndex - 1 + missionsTotalSlides) % missionsTotalSlides;
-        updateMissionsCarousel(missionsCurrentIndex);
-    }
+    if (msPrev) msPrev.addEventListener('click', () => { msAutoStop(); msGo(msCurrent - 1); msAutoStart(); });
+    if (msNext) msNext.addEventListener('click', () => { msAutoStop(); msGo(msCurrent + 1); msAutoStart(); });
 
-    // Event listeners para botones
-    if (missionsNextBtn) {
-        missionsNextBtn.addEventListener('click', () => {
-            stopMissionsAutoplay();
-            nextMissionsSlide();
-            startMissionsAutoplay();
-        });
-    }
-
-    if (missionsPrevBtn) {
-        missionsPrevBtn.addEventListener('click', () => {
-            stopMissionsAutoplay();
-            prevMissionsSlide();
-            startMissionsAutoplay();
-        });
-    }
-
-    // Event listeners para dots
-    missionsDots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            stopMissionsAutoplay();
-            missionsCurrentIndex = index;
-            updateMissionsCarousel(missionsCurrentIndex);
-            startMissionsAutoplay();
-        });
+    msDots.forEach((dot, i) => {
+        dot.addEventListener('click', () => { msAutoStop(); msGo(i); msAutoStart(); });
     });
 
-    // Autoplay
-    function startMissionsAutoplay() {
-        missionsAutoplayInterval = setInterval(nextMissionsSlide, 8000);
+    // Swipe
+    const msViewport = document.querySelector('.ms-viewport');
+    if (msViewport) {
+        let msSwipeX = 0;
+        msViewport.addEventListener('touchstart', e => { msSwipeX = e.touches[0].clientX; }, { passive: true });
+        msViewport.addEventListener('touchend', e => {
+            const dx = e.changedTouches[0].clientX - msSwipeX;
+            if (Math.abs(dx) > 45) { msAutoStop(); msGo(msCurrent + (dx < 0 ? 1 : -1)); msAutoStart(); }
+        }, { passive: true });
     }
 
-    function stopMissionsAutoplay() {
-        if (missionsAutoplayInterval) {
-            clearInterval(missionsAutoplayInterval);
-        }
+    // Pause on hover
+    const msWrap = document.querySelector('.ms-carousel-wrap');
+    if (msWrap) {
+        msWrap.addEventListener('mouseenter', msAutoStop);
+        msWrap.addEventListener('mouseleave', msAutoStart);
     }
 
-    // Iniciar autoplay
-    startMissionsAutoplay();
-
-    // Pausar autoplay al hover
-    const missionsContainer = document.querySelector('.missions-carousel-container');
-    if (missionsContainer) {
-        missionsContainer.addEventListener('mouseenter', stopMissionsAutoplay);
-        missionsContainer.addEventListener('mouseleave', startMissionsAutoplay);
+    // Header reveal
+    const msHeader = document.querySelector('.ms-header.ms-reveal');
+    if (msHeader) {
+        new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('ms-visible'); });
+        }, { threshold: 0.25 }).observe(msHeader);
     }
 
-    // Soporte para teclado
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-            stopMissionsAutoplay();
-            prevMissionsSlide();
-            startMissionsAutoplay();
-        } else if (e.key === 'ArrowRight') {
-            stopMissionsAutoplay();
-            nextMissionsSlide();
-            startMissionsAutoplay();
-        }
-    });
+    msGo(0);
+    msAutoStart();
 });
