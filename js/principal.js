@@ -355,6 +355,9 @@
     function initHomeSTLViewer() {
         const container = document.getElementById("home-stl-viewer");
         if (!container || typeof THREE === "undefined" || typeof THREE.STLLoader === "undefined") return;
+        // addChasisParts/addArmParts/centerDigitalTwin/loadSTLCached vienen de
+        // js/digital-twin.js (debe cargarse antes que este script).
+        const hasDigitalTwinHelpers = typeof addChasisParts === "function" && typeof addArmParts === "function";
 
         const loading = container.querySelector("[data-stl-loading]");
         const title = document.querySelector("[data-model-title]");
@@ -365,14 +368,26 @@
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         const loader = new THREE.STLLoader();
         const clock = new THREE.Clock();
-        let mesh = null;
+        // "activeObject" es un THREE.Mesh (Módulo, STL único) o un THREE.Group
+        // (Rover/Brazo, ensambles multi-pieza vía digital-twin.js).
+        let activeObject = null;
+        let activeKind = null; // 'stl' | 'full' | 'arm'
         let frameId = null;
+
+        // Stub para centerDigitalTwin() -- solo necesita target/minDistance/
+        // maxDistance/update(), no hace falta un OrbitControls real ya que este
+        // visor no tiene interacción de mouse (auto-rotación fija, como antes).
+        const controlsStub = {
+            target: new THREE.Vector3(),
+            minDistance: 0,
+            maxDistance: 0,
+            update() {}
+        };
 
         renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
         renderer.setClearColor(0x000000, 0);
         container.appendChild(renderer.domElement);
 
-        camera.position.set(4, 2.3, 6);
         scene.add(new THREE.AmbientLight(0xffffff, 0.8));
 
         const keyLight = new THREE.DirectionalLight(0xffffff, 1.25);
@@ -405,17 +420,68 @@
             if (message) loading.textContent = message;
         }
 
-        function disposeCurrentMesh() {
-            if (!mesh) return;
-            scene.remove(mesh);
-            mesh.geometry.dispose();
-            mesh.material.dispose();
-            mesh = null;
+        function disposeActive() {
+            if (!activeObject) return;
+            scene.remove(activeObject);
+            activeObject.traverse((o) => {
+                if (o.isMesh) {
+                    o.geometry.dispose();
+                    o.material.dispose();
+                }
+            });
+            activeObject = null;
         }
 
-        function loadModel(path, label, description) {
+        // Rover completo (chasis+brazo) y Brazo solo: ensambles multi-pieza,
+        // mismas piezas/pivotes reales que rover.html -- ver digital-twin.js.
+        function loadAssembly(kind, label, description) {
+            if (!hasDigitalTwinHelpers) {
+                setLoading("No se pudo cargar el gemelo digital (digital-twin.js no disponible).");
+                return;
+            }
             setLoading("Cargando modelo 3D...");
-            disposeCurrentMesh();
+            disposeActive();
+            activeKind = kind;
+
+            if (title && label) title.textContent = label;
+            if (copy && description) copy.textContent = description;
+
+            const model = new THREE.Group();
+            scene.add(model);
+            activeObject = model;
+            const core = new THREE.Group();
+            model.add(core);
+
+            function onEachLoaded(loadedN, pendingN) {
+                setLoading(`Cargando modelo 3D... ${Math.round((loadedN / pendingN) * 100)}%`);
+            }
+            function finish() {
+                setLoading("");
+                centerDigitalTwin(model, camera, controlsStub, 1.7);
+            }
+
+            if (kind === "full") {
+                let chasisDone = false, armDone = false;
+                const maybeDone = () => { if (chasisDone && armDone) finish(); };
+                addChasisParts(core, onEachLoaded, () => { chasisDone = true; maybeDone(); });
+                addArmParts(core, onEachLoaded, () => { armDone = true; maybeDone(); });
+            } else if (kind === "arm") {
+                addArmParts(core, onEachLoaded, finish);
+            }
+        }
+
+        // Módulo de vida: STL único (sin cambios de contenido -- pendiente de un
+        // archivo real, ver memoria del proyecto: ModuloVida.STL es actualmente
+        // idéntico a BRAZO.STL, un duplicado, no un módulo de vida real).
+        function loadSingle(path, label, description) {
+            setLoading("Cargando modelo 3D...");
+            disposeActive();
+            activeKind = "stl";
+
+            // Reset explícito: si la vista anterior fue un ensamble (Rover/Brazo),
+            // centerDigitalTwin() movió la cámara -- este modo usa un encuadre fijo.
+            camera.position.set(4, 2.3, 6);
+            camera.lookAt(0, 0, 0);
 
             if (title && label) title.textContent = label;
             if (copy && description) copy.textContent = description;
@@ -432,7 +498,8 @@
                         roughness: 0.32
                     });
 
-                    mesh = new THREE.Mesh(geometry, material);
+                    const mesh = new THREE.Mesh(geometry, material);
+                    activeObject = mesh;
 
                     const box = new THREE.Box3().setFromObject(mesh);
                     const size = box.getSize(new THREE.Vector3());
@@ -440,7 +507,7 @@
                     const scale = 3.6 / maxDim;
                     mesh.scale.setScalar(scale);
                     mesh.rotation.x = -Math.PI / 2;
-                    mesh.rotation.z = Math.PI * 0.08;
+                    mesh.rotation.z = Math.PI * 0.08 + Math.PI / 2;
                     scene.add(mesh);
 
                     setLoading("");
@@ -457,11 +524,24 @@
             );
         }
 
+        function loadFromButton(button) {
+            const kind = button.dataset.kind;
+            if (kind === "full" || kind === "arm") {
+                loadAssembly(kind, button.dataset.title, button.dataset.copy);
+            } else {
+                loadSingle(button.dataset.stl, button.dataset.title, button.dataset.copy);
+            }
+        }
+
         function animate() {
             const time = clock.getElapsedTime();
-            if (mesh) {
-                mesh.rotation.z += 0.006;
-                mesh.position.y = Math.sin(time * 1.2) * 0.05;
+            if (activeObject) {
+                if (activeKind === "stl") {
+                    activeObject.rotation.z += 0.006;
+                } else {
+                    activeObject.rotation.y += 0.006;
+                }
+                activeObject.position.y = Math.sin(time * 1.2) * 0.05;
             }
 
             renderer.render(scene, camera);
@@ -472,7 +552,7 @@
             button.addEventListener("click", () => {
                 buttons.forEach((item) => item.classList.remove("active"));
                 button.classList.add("active");
-                loadModel(button.dataset.stl, button.dataset.title, button.dataset.copy);
+                loadFromButton(button);
             });
         });
 
@@ -480,8 +560,9 @@
         new ResizeObserver(resize).observe(container);
 
         const initialButton = document.querySelector(".model-selector.active") || buttons[0];
-        const initialModel = initialButton ? initialButton.dataset.stl : container.dataset.defaultModel;
-        loadModel(initialModel, initialButton?.dataset.title, initialButton?.dataset.copy);
+        if (initialButton) {
+            loadFromButton(initialButton);
+        }
         animate();
 
         document.addEventListener("visibilitychange", () => {

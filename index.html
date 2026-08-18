@@ -78,12 +78,12 @@
                         <span>STL LIVE VIEW</span>
                         <span class="console-status">ONLINE</span>
                     </div>
-                    <div id="home-stl-viewer" class="stl-viewer" data-default-model="stl/ROVER 2025 MOVIL.STL">
+                    <div id="home-stl-viewer" class="stl-viewer" data-default-kind="full">
                         <div class="stl-loading" data-stl-loading>Cargando modelo 3D...</div>
                     </div>
                     <div class="model-controls" aria-label="Selector de modelo STL">
-                        <button class="model-selector active" type="button" data-stl="stl/ROVER 2025 MOVIL.STL" data-title="Rover 2025" data-copy="Plataforma móvil principal para operación en terreno análogo.">Rover</button>
-                        <button class="model-selector" type="button" data-stl="stl/BRAZO.STL" data-title="Brazo robótico" data-copy="Sistema de manipulación para paneles, herramientas y tareas de precisión.">Brazo</button>
+                        <button class="model-selector active" type="button" data-kind="full" data-title="Rover 2025" data-copy="Plataforma móvil principal para operación en terreno análogo.">Rover</button>
+                        <button class="model-selector" type="button" data-kind="arm" data-title="Brazo robótico" data-copy="Sistema de manipulación para paneles, herramientas y tareas de precisión.">Brazo</button>
                         <button class="model-selector" type="button" data-stl="stl/ModuloVida.STL" data-title="Módulo de vida" data-copy="Prototipo de soporte e integración para escenarios de misión.">Módulo</button>
                     </div>
                     <div class="model-caption">
@@ -417,6 +417,7 @@
         </div>
     </footer>
 
+    <script src="js/digital-twin.js"></script>
     <script src="js/principal.js"></script>
 </body>
 </html>

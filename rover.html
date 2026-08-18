@@ -25,9 +25,9 @@
         </div>
     </header>
 
-    <!-- Contenedor con Scroll Snap para las 3 secciones 3D -->
+    <!-- Contenedor con Scroll Snap para las 4 secciones 3D -->
     <div class="snap-container">
-        <!-- Sección MILIMARS ROVER -->
+        <!-- Sección 1: MILIMARS ROVER (completo -- chasis + tracción + brazo) -->
         <section id="rover-section" class="hero-3d">
             <div id="rover-canvas-container"></div>
             <div id="rover-loading">
@@ -50,7 +50,23 @@
             </div>
         </section>
 
-        <!-- Sección MÓDULO DE VIDA -->
+        <!-- Sección 2: CHASIS Y TRACCIÓN (4 ruedas) -->
+        <section id="chasis-section" class="hero-3d">
+            <div id="chasis-canvas-container"></div>
+            <div id="chasis-loading">
+                <div class="hero-loader"></div>
+                <div class="hero-loading-text">Cargando Chasis...</div>
+            </div>
+            <div class="container hero-content">
+                <h1 class="hero-title">CHASIS Y TRACCIÓN</h1>
+                <div class="hero-bottom-content">
+                    <p class="hero-subtitle">Tracción 4x4</p>
+                    <p class="hero-description">Sistema de tracción independiente en 4 ruedas para navegación en terreno marciano</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 3: MÓDULO DE VIDA -->
         <section id="modulo-section" class="hero-3d">
             <div id="modulo-canvas-container"></div>
             <div id="modulo-loading">
@@ -66,7 +82,7 @@
             </div>
         </section>
 
-        <!-- Sección BRAZO ROBÓTICO -->
+        <!-- Sección 4: BRAZO ROBÓTICO -->
         <section id="brazo-section" class="hero-3d">
             <div id="brazo-canvas-container"></div>
             <div id="brazo-loading">
@@ -179,7 +195,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
-    
+
+    <script src="js/digital-twin.js"></script>
     <script src="js/principal.js"></script>
     <script src="js/rover.js"></script>
 </body>
